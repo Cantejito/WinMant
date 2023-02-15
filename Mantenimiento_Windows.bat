@@ -1,6 +1,6 @@
 @echo Off
 
-SET VER=Version 1.18
+SET VER=Version 0.18
 
 NET SESSION >nul 2>& 1
 IF %ERRORLEVEL% == 0 GOTO AVISO
