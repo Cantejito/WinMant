@@ -1,5 +1,7 @@
 @echo Off
 
+SET VER="1.18"
+
 NET SESSION >nul 2>& 1
 IF %ERRORLEVEL% == 0 GOTO AVISO
 
@@ -28,7 +30,7 @@ CLS
 
 echo [97m----------------------------------------------------------------------------------[0m
 
-echo. & echo [92m----- VERSION 1.18[0m
+echo. & echo [92m----- %VER%[0m
 
 echo. & echo [41m---------------------------IMPORTANTE! LEA ATENTAMENTE!---------------------------[0m
 
@@ -63,7 +65,7 @@ echo. & echo [97m--------------------------------------------------------------
 
 SETLOCAL EnableExtensions
 
-echo. & echo ------ Buscando actualizaciones...
+echo. & echo ----- Buscando actualizaciones...
 
 bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
 
