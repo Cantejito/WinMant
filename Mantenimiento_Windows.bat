@@ -1,6 +1,6 @@
 @echo Off
 
-SET VER="1.18"
+SET VER=Version 1.18
 
 NET SESSION >nul 2>& 1
 IF %ERRORLEVEL% == 0 GOTO AVISO
@@ -91,7 +91,7 @@ COLOR 0F
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo [92m----- MENU PRINCIPAL[0m
+echo. & echo [92m----- MENU PRINCIPAL - %VER%[0m
 
 echo. [97m
 echo. & echo ----- 0 para SALIR
