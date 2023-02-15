@@ -28,7 +28,7 @@ CLS
 
 echo [97m----------------------------------------------------------------------------------[0m
 
-echo. & echo [92m----- VERSION 1.17.7[0m
+echo. & echo [92m----- VERSION 1.18[0m
 
 echo. & echo [41m---------------------------IMPORTANTE! LEA ATENTAMENTE!---------------------------[0m
 
@@ -65,7 +65,7 @@ SETLOCAL EnableExtensions
 
 echo. & echo ------ Buscando actualizaciones...
 
-bitsadmin /transfer Updt https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
+bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
 
 SET OLD="%~dp0"
 SET NEW="C:\Windows\Temp\Mantenimiento_Windows.bat"
@@ -105,7 +105,6 @@ echo. & echo ----- 8 para ANALISIS AUTOMATICO WINDOWS DEFENDER. [91mAVANZADO[0
 echo. & echo ----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO[0m
 		echo "C:\Program Files\WindowsApps" >nul
 		
-echo. & echo ----- V para REGISTRO DE VERSIONES.
 echo.
 echo.
 SET /P W=[97m----- Ejecutar...[0m 
@@ -121,7 +120,6 @@ SET /P W=[97m----- Ejecutar...[0m
 	IF /I %W% == 7 GOTO MEMORIA
 	IF /I %W% == 8 GOTO DEFENDER
 	IF /I %W% == 9 GOTO WINDOWSAPPS
-	IF /I %W% == V GOTO VERSION
 	GOTO MENU
 
 :COMPLETO
@@ -551,56 +549,6 @@ echo. & echo -------------------------------------------------------------------
 
 echo.
 echo. & echo ----- Completado. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menu.
-
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
-
-:VERSION
-
-CLS
-
-echo ----------------------------------------------------------------------------------
-
-echo. & echo ----- BETA 1 - COMANDOS INDEPENDIENTES.
-
-echo. & echo ----- BETA 2 - FASE EXPERIMENTAL DEL MENU.
-
-echo. & echo ----- 1.0 - UNIFICACION.
-
-echo. & echo ----- 1.1 - CAMBIO EN ESTRUCTURA DEL MENU.
-
-echo. & echo ----- 1.2 - CAMBIO EN COMANDO DE REDIRECCION.
-
-echo. & echo ----- 1.3 - AGREGADOS COMANDOS INDEPENDIENTES PARA MANTENIMIENTO Y LIMPIEZA.
-
-echo. & echo ----- 1.4 - OPTIMIZACION DEL CODIGO Y CAMBIOS EN LA INTERFAZ.
-
-echo. & echo ----- 1.5 - MEJORA EN COMANDOS DE ARCHIVOS TEMPORALES.
-
-echo. & echo ----- 1.6 - CREACION DEL APARTADO "VERSION" Y CAMBIOS MENORES.
-
-echo. & echo ----- 1.7 - CAMBIOS EN EL AVISO INICIAL Y SU CODIGO.
-
-echo. & echo ----- 1.8 - CAMBIOS EN LA DETECCION DE COMANDOS.
-
-echo. & echo ----- 1.9 - CAMBIOS EN CODIGO, ESTRUCTURA, MENU Y TEXTO.
-
-echo. & echo ----- 1.10 - AGREGADO CODIGO DE COLORES. CODIGO OPTIMIZADO.
-
-echo. & echo ----- 1.11 - CAMBIOS EN CODIGO, ESTRUCTURA Y TEXTO. CODIGO OPTIMIZADO.
-
-echo. & echo ----- 1.12 - LIMPIEZA DE ARCHIVOS TEMPORALES MEJORADA. CODIGO OPTIMIZADO.
-
-echo. & echo ----- 1.13 - AGREGADA OPCION EN LIMPIEZA DE ARCHIVOS TEMPORALES. CODIGO OPTIMIZADO.
-
-echo. & echo ----- 1.14 - ELIMINADO ACCESO A FUNCIONES OBSOLETAS.
-
-echo. & echo ----- 1.15 - AGREGADO PERMISO DE LIMPIEZA DE "C:\Program Files\WindowsApps".
-
-echo. & echo ----- 1.16 - FEEDBACK AGREGADO, SELECCION DE HIBERNACION AGREGADO, NOTIFICACION BUG WINDOWS, PROCEDIMIENTO ERROR MEJORADA Y FUNCION EXPERIMENTAL ACLARADA.
-
-echo. & echo ----- 1.17 - VELOCIDAD DE TRABAJO MEJORADA, PROFUNDIDAD DE LIMPIEZA DE ARCHIVOS TEMPORALES MEJORADA, VISIBILIDAD MEJORADA, TAMAÑO DE VENTANA AJUSTADO, CÓDIGO OPTIMIZADO.
-
 echo. & echo ----- Pulse INTRO para volver al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
