@@ -66,22 +66,14 @@ echo. & echo [97m--------------------------------------------------------------
 SETLOCAL EnableExtensions
 
 echo. & echo ----- Buscando actualizaciones...
-
 bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
+	find "%Ver%" C:\Windows\Temp\Mantenimiento_Windows.bat >nul && GOTO COMPLETADO.NOUPDATE
 
-SET OLD="%~f0"
-SET NEW="C:\Windows\Temp\Mantenimiento_Windows.bat"
+		echo.
+		echo ----- Actualizando...
+		move /y %NEW% "%~dp0" > nul 2>&1
 
-FOR %%i IN (%OLD%) DO SET OLDDATE=%%~ti
-FOR %%i IN (%NEW%) DO SET NEWDATE=%%~ti
-
-IF "%OLDDATE%" GEQ "%NEWDATE%" (echo. & echo ----- Ya tienes la ultima version. & GOTO COMPLETADO.NOUPDATE )
-
-	echo.
-	echo ----- Actualizando...
-	move /y %NEW% "%~dp0" > nul 2>&1
-
-GOTO COMPLETADO.UPDATE
+			GOTO COMPLETADO.UPDATE
 
 :MENU
 
@@ -541,7 +533,7 @@ echo. & echo -------------------------------------------------------------------
 :COMPLETADO.UPDATE
 
 echo.
-echo. & echo ----- Completado. & COLOR 0A
+echo. & echo ----- Actualizacion completada. & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
@@ -549,7 +541,7 @@ echo. & echo -------------------------------------------------------------------
 :COMPLETADO.NOUPDATE
 
 echo.
-echo. & echo ----- Completado. & COLOR 0A
+echo. & echo ----- No hay actualizaciones disponibles. & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
