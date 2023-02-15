@@ -76,9 +76,8 @@ FOR %%i IN (%NEW%) DO SET NEWDATE=%%~ti
 IF "%OLDDATE%" GEQ "%NEWDATE%" (echo. & echo ----- Ya tienes la ultima version. & GOTO COMPLETADO.NOUPDATE )
 
 	echo.
-	echo ----- Nueva version disponible, actualizando...
-	cd "C:\Windows\Temp\" > nul 2>&1
-	move "Mantenimiento_Windows.bat" "%~dp0" 
+	echo ----- Actualizando...
+	move /y %NEW% "%~dp0" > nul 2>&1
 
 GOTO COMPLETADO.UPDATE
 
