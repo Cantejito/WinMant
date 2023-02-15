@@ -74,7 +74,8 @@ bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.
 		echo.
 		echo ----- Actualizando...
 		move /y "C:\Windows\Temp\Mantenimiento_Windows.bat" "%~dp0" > nul 2>&1
-
+		del C:\Windows\Temp\Mantenimiento_Windows.bat
+		
 			GOTO COMPLETADO.UPDATE
 
 :MENU
@@ -431,9 +432,9 @@ echo ---------------------------------------------------------------------------
 
 echo. & echo ----- Obteniendo ajustes de analisis automatico... & COLOR 09
 
-	schtasks /query /tn "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /fo list >nul > C:/Temp/WDSSTemp.txt 2>nul
+	schtasks /query /tn "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /fo list >nul > C:\Windows\Temp\WDSSTemp.txt 2>nul
 
-	find "Deshabilitado" C:\Temp\WDSSTemp.txt >nul && GOTO DEF.CHECK
+	find "Deshabilitado" C:\Windows\Temp\WDSSTemp.txt >nul && GOTO DEF.CHECK
 	
 	echo.
 	echo.
@@ -451,11 +452,11 @@ echo. & echo ----- Obteniendo ajustes de analisis automatico... & COLOR 09
 				:DEF.OFF
 				schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
 				echo. & echo ----- Analisis automatico desactivado.
-				del C:\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
+				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 				:DEF.NONE
 				echo. & echo ----- La configuracion no ha sido modificada.
-				del C:\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
+				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 		:DEF.CHECK
 		echo.
@@ -475,11 +476,11 @@ echo. & echo ----- Obteniendo ajustes de analisis automatico... & COLOR 09
 				:DEF.ON
 				schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
 				echo. & echo ----- Analisis automatico desactivado.
-				del C:\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
+				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 				:DEF.NONE
 				echo. & echo ----- La configuracion no ha sido modificada.
-				del C:\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
+				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 :WINDOWSAPPS
 
