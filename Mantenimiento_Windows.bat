@@ -67,18 +67,18 @@ echo. & echo ------ Buscando actualizaciones...
 
 bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
 
-SET OLD="%~dp0"
+SET OLD="%~f0"
 SET NEW="C:\Windows\Temp\Mantenimiento_Windows.bat"
 
-FOR %%i IN (%OLD%) DO SET DATE1=%%~ti
-FOR %%i IN (%NEW%) DO SET DATE2=%%~ti
+FOR %%i IN (%OLD%) DO SET OLDDATE=%%~ti
+FOR %%i IN (%NEW%) DO SET NEWDATE=%%~ti
 
-IF "%DATE1%" LEQ "%DATE2%" (echo. & echo ----- Ya tienes la ultima version. & GOTO COMPLETADO.NOUPDATE )
+IF "%OLDDATE%" GEQ "%NEWDATE%" (echo. & echo ----- Ya tienes la ultima version. & GOTO COMPLETADO.NOUPDATE )
 
 	echo.
-	echo ----- Actualizando...
-	cd C:\Windows\Temp\ > nul 2>&1
-	move "Mantenimiento_Windows.bat" "%OLD%" > nul 2>&1
+	echo ----- Nueva version disponible, actualizando...
+	cd "C:\Windows\Temp\" > nul 2>&1
+	move "Mantenimiento_Windows.bat" "%~dp0" 
 
 GOTO COMPLETADO.UPDATE
 
