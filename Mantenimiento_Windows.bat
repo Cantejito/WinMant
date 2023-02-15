@@ -65,6 +65,8 @@ echo. & echo [97m--------------------------------------------------------------
 
 SETLOCAL EnableExtensions
 
+echo ----------------------------------------------------------------------------------
+
 echo. & echo ----- Buscando actualizaciones...
 bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
 	find "%Ver%" C:\Windows\Temp\Mantenimiento_Windows.bat >nul && GOTO COMPLETADO.NOUPDATE
