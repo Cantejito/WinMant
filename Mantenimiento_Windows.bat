@@ -73,7 +73,7 @@ bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.
 
 		echo.
 		echo ----- Actualizando...
-		move /y %NEW% "%~dp0" > nul 2>&1
+		move /y "C:\Windows\Temp\Mantenimiento_Windows.bat" "%~dp0" > nul 2>&1
 
 			GOTO COMPLETADO.UPDATE
 
@@ -532,14 +532,6 @@ echo. & echo ----- Pulse INTRO para volver al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
 
-:COMPLETADO.UPDATE
-
-echo.
-echo. & echo ----- Actualizacion completada. Es necesario reiniciar la herramienta. & COLOR 0A
-echo. & echo ----- Pulse INTRO para salir.
-
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & Exit
-
 :COMPLETADO.NOUPDATE
 
 echo.
@@ -547,3 +539,11 @@ echo. & echo ----- No hay actualizaciones disponibles. & COLOR 0A
 echo. & echo ----- Pulse INTRO para ir al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
+
+:COMPLETADO.UPDATE
+
+echo.
+echo. & echo ----- Actualizacion completada. Es necesario reiniciar la herramienta. & COLOR 0A
+echo. & echo ----- Pulse INTRO para salir.
+
+echo. & echo ----------------------------------------------------------------------------------& Pause >nul & Exit
