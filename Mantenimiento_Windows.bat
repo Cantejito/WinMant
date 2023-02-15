@@ -69,12 +69,12 @@ echo ---------------------------------------------------------------------------
 
 echo. & echo ----- Buscando actualizaciones...
 bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
-	find "%Ver%" C:\Windows\Temp\Mantenimiento_Windows.bat >nul && GOTO COMPLETADO.NOUPDATE
+	find "%Ver%" C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1 && GOTO COMPLETADO.NOUPDATE
 
 		echo.
 		echo ----- Actualizando...
 		move /y "C:\Windows\Temp\Mantenimiento_Windows.bat" "%~dp0" > nul 2>&1
-		del C:\Windows\Temp\Mantenimiento_Windows.bat
+		del C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
 		
 			GOTO COMPLETADO.UPDATE
 
