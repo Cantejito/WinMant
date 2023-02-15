@@ -533,15 +533,15 @@ echo. & echo -------------------------------------------------------------------
 :COMPLETADO.UPDATE
 
 echo.
-echo. & echo ----- Actualizacion completada. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menu.
+echo. & echo ----- Actualizacion completada. Es necesario reiniciar la herramienta. & COLOR 0A
+echo. & echo ----- Pulse INTRO para salir.
 
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
+echo. & echo ----------------------------------------------------------------------------------& Pause >nul & Exit
 
 :COMPLETADO.NOUPDATE
 
 echo.
 echo. & echo ----- No hay actualizaciones disponibles. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menu.
+echo. & echo ----- Pulse INTRO para ir al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
