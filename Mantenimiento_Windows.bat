@@ -1,12 +1,12 @@
 @echo Off
 
-chcp 65001
-
-SET ver=Version 0.18.1.3
+SET ver=Version 0.18.1.4
 SET url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 SET temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
 SETLOCAL EnableExtensions
+
+chcp 65001
 
 NET SESSION >nul 2>& 1
 IF %ERRORLEVEL% == 0 GOTO AVISO
@@ -49,7 +49,7 @@ echo. & echo ----- SI ESTÁ POR CUENTA PROPIA, PRESTE ESPECIAL ATENCIÓN A LAS R
 echo. & echo ----- NO USE LA HERRAMIENTA SI HAY ACTUALIZACIONES EN CURSO.
 
 echo. & echo ----- NO ME HAGO RESPONSABLE DE: MAL USO DE LA HERRAMIENTA, PROBLEMAS CAUSADOS
-		echo       AL SOFTWARE/HARDWARE O PERDIDA DE DATOS.
+		echo       AL SOFTWARE/HARDWARE O PÉRDIDA DE DATOS.
 
 echo. & echo ----- ESPERE A QUE SE COMPLETE LA OPERACIÓN ANTES DE CERRAR LA HERRAMIENTA.
 
@@ -74,18 +74,21 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -C - -o %temp% %url% -s
-	find "%Ver%" %temp% > nul 2>&1
-		if %errorlevel% equ 1 (
-			echo. & echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
-			echo [97m
-			CHOICE /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-				IF ERRORLEVEL == 2 GOTO MENU
-					echo. & echo ----- Actualizando...
-					move /y "%temp%" "%~dp0" > nul 2>&1
-						EXIT
-			) ELSE (
-				GOTO NOUPDATE
-				)
+find "%ver%" %temp% > nul 2>&1
+if %errorlevel% equ 1 (
+	echo.
+	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
+	echo [97m
+	CHOICE /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
+	if %errorlevel% equ 2 GOTO MENU
+	echo.
+	echo ----- Actualizando...
+	move /y "%temp%" "%~dp0" > nul 2>&1
+	EXIT
+) ELSE (
+	GOTO MENU
+)
+
 
 :MENU
 
@@ -114,19 +117,19 @@ echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO
 		
 echo.
 echo.
-SET /P W=[97m----- Ejecutar...[0m 
-	IF "%W%" == "" GOTO MENU
-	IF /I %W% == M GOTO MENU
-	IF /I %W% == 0 EXIT
-	IF /I %W% == 1 GOTO COMPLETO
-	IF /I %W% == 2 GOTO ESTADO
-	IF /I %W% == 3 GOTO TEMP
-	IF /I %W% == 4 GOTO DISCOS
-	IF /I %W% == 5 GOTO HIBERNAR
-	IF /I %W% == 6 GOTO RED
-	IF /I %W% == 7 GOTO MEMORIA
-	IF /I %W% == 8 GOTO DEFENDER
-	IF /I %W% == 9 GOTO WINDOWSAPPS
+set /p Q=[97m----- Ejecutar...[0m 
+	if "%Q%" == "" GOTO MENU
+	if /I %Q% == M GOTO MENU
+	if /I %Q% == 0 EXIT
+	if /I %Q% == 1 GOTO COMPLETO
+	if /I %Q% == 2 GOTO ESTADO
+	if /I %Q% == 3 GOTO TEMP
+	if /I %Q% == 4 GOTO DISCOS
+	if /I %Q% == 5 GOTO HIBERNAR
+	if /I %Q% == 6 GOTO RED
+	if /I %Q% == 7 GOTO MEMORIA
+	if /I %Q% == 8 GOTO DEFENDER
+	if /I %Q% == 9 GOTO WINDOWSAPPS
 	GOTO MENU
 
 :COMPLETO
@@ -328,54 +331,49 @@ GOTO COMPLETADO
 CLS
 
 echo ----------------------------------------------------------------------------------
+echo.
+echo ----- Obteniendo ajustes de hibernación... & COLOR 09
 
-echo. & echo ----- Obteniendo ajustes de hibernación... & COLOR 09
-	
-	PowerShell Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Power -name HibernateEnabled >$null
-	IF %ERRORLEVEL% == 1 GOTO HIB.CHECK
-		echo.
-		echo.
+REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled > nul 2>&1
+IF %ERRORLEVEL% == 0 GOTO HIB.CHECK
+	echo.
+	echo.	
+	echo [93m----- Estado actual: Activada.[0m & echo [94m
 		
-		echo [93m----- Estado actual: Activada.[0m & echo [94m
+	echo. & echo ----- 1 para Desactivar.
+	echo. & echo ----- 2 para No modificar.
+	echo. & echo.
 		
-		echo. & echo ----- 1 para Desactivar.
-		echo. & echo ----- 2 para No modificar.
-		echo. & echo.
+	SET /P HIB=----- Ejecutar... & echo [0m
+		IF /I %HIB% == 1 GOTO HIB.OFF
+		IF /I %HIB% == 2 GOTO HIB.NONE
+		GOTO HIBERNAR
+				
+:HIB.CHECK
+	echo.
+	echo.	
+	echo [93m----- Estado actual: Desactivada.[0m & echo [94m
 		
-		SET /P HIB=----- Ejecutar... & echo [0m
-			IF /I %HIB% == 1 GOTO HIB.OFF
-			IF /I %HIB% == 2 GOTO HIB.NONE
-			GOTO HIBERNAR
+	echo. & echo ----- 1 para Activar.
+	echo. & echo ----- 2 para No modificar.
+	echo. & echo.
+		
+	SET /P HIB=----- Ejecutar... & echo [0m
+		IF /I %HIB% == 1 GOTO HIB.ON
+		IF /I %HIB% == 2 GOTO HIB.NONE
+		GOTO HIBERNAR
 			
-				:HIB.OFF
-				powercfg.exe /hibernate off >nul & echo.
-				echo. & echo ----- hibernación desactivada. & GOTO COMPLETADO
-				
-				:HIB.NONE
-				echo. & echo ----- La configuración no ha sido modificada. & GOTO COMPLETADO
-				
-		:HIB.CHECK
-		echo.
-		echo.
+:HIB.ON
+powercfg.exe /hibernate on >nul & echo.
+echo ----- Hibernación activada. & GOTO COMPLETADO
 		
-		echo [93m----- Estado actual: Desactivada.[0m & echo [94m
+:HIB.OFF
+powercfg.exe /hibernate off >nul & echo.
+echo. & echo ----- Hibernación desactivada. & GOTO COMPLETADO
 		
-		echo. & echo ----- 1 para Activar.
-		echo. & echo ----- 2 para No modificar.
-		echo. & echo.
-		
-		SET /P HIB=----- Ejecutar... & echo [0m
-			IF /I %HIB% == 1 GOTO HIB.ON
-			IF /I %HIB% == 2 GOTO HIB.NONE
-			GOTO HIBERNAR
-			
-				:HIB.ON
-				powercfg.exe /hibernate on >nul & echo.
-				echo ----- hibernación activada. & GOTO COMPLETADO
-				
-				:HIB.NONE
-				echo. & echo ----- La configuración no ha sido modificada. & GOTO COMPLETADO
-				
+:HIB.NONE
+echo. & echo ----- La configuración no ha sido modificada. & GOTO COMPLETADO
+
 :RED
 
 CLS
