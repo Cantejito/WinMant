@@ -1,6 +1,10 @@
 @echo Off
 
-SET VER=Version 0.18
+SET ver=Version 0.18.1
+SET url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
+SET temp=C:\Windows\Temp\Mantenimiento_Windows.bat
+
+SETLOCAL EnableExtensions
 
 NET SESSION >nul 2>& 1
 IF %ERRORLEVEL% == 0 GOTO AVISO
@@ -28,9 +32,9 @@ MODE CON: COLS=82 LINES=37
 
 CLS
 
-echo [97m----------------------------------------------------------------------------------[0m
+echo [97m----------------------------------------------------------------------------------
 
-echo. & echo [92m----- %VER%[0m
+echo. & echo [92m----- %ver%[0m
 
 echo. & echo [41m---------------------------IMPORTANTE! LEA ATENTAMENTE!---------------------------[0m
 
@@ -57,26 +61,33 @@ echo. & echo ----- SEA PACIENTE, ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS 
 
 echo. & echo [41m---------------------------IMPORTANTE! LEA ATENTAMENTE!---------------------------[0m
 
-echo. & echo [97m----- Pulse INTRO si ha leido, entiende y acepta todo lo anterior.[0m
+echo. & echo [97m----- Pulse INTRO si ha leido, entiende y acepta todo lo anterior.
 
-echo. & echo [97m----------------------------------------------------------------------------------[0m& Pause >nul & CLS
+echo. & echo ----------------------------------------------------------------------------------[0m& Pause >nul & CLS
 
 :UPDATE
 
-SETLOCAL EnableExtensions
-
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Buscando actualizaciones...
-bitsadmin /transfer Updt /download /priority high https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
-	find "%Ver%" C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1 && GOTO COMPLETADO.NOUPDATE
+echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
-		echo.
-		echo ----- Actualizando...
-		move /y "C:\Windows\Temp\Mantenimiento_Windows.bat" "%~dp0" > nul 2>&1
-		del C:\Windows\Temp\Mantenimiento_Windows.bat > nul 2>&1
+curl -C - -o %temp% %url% -s
+	find "%Ver%" "%temp%" > nul 2>&1
+		if %errorlevel% equ 1 (
 		
-			GOTO COMPLETADO.UPDATE
+		echo. & echo [93m----- Nueva version disponible. Al actualizar, la herramienta se cerrara.[0m
+		echo [97m
+		CHOICE /C SN /N /M "----- Actualizar? (Recomendado) [S/N]: "
+			IF ERRORLEVEL == 2 DEL %temp% & GOTO MENU
+			
+				echo.
+				echo ----- Actualizando...
+				move /y "%temp%" "%~dp0" > nul 2>&1
+				EXIT
+				
+			) ELSE (
+				GOTO COMPLETADO.NOUPDATE
+				)
 
 :MENU
 
@@ -86,7 +97,7 @@ COLOR 0F
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo [92m----- MENU PRINCIPAL - %VER%[0m
+echo. & echo [92m----- MENU PRINCIPAL - %ver%
 
 echo. [97m
 echo. & echo ----- 0 para SALIR
@@ -97,8 +108,8 @@ echo. & echo ----- 4 para COMPROBACION Y REPARACION DE DISCOS.
 echo. & echo ----- 5 para ACTIVAR/DESACTIVAR HIBERNACION.
 echo. & echo ----- 6 para REESTABLECIMIENTO DE RED.
 echo. & echo ----- 7 para ANALISIS DE MEMORIA.
-echo. & echo ----- 8 para ANALISIS AUTOMATICO WINDOWS DEFENDER. [91mAVANZADO[0m
-echo. & echo ----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO[0m
+echo. & echo ----- 8 para ANALISIS AUTOMATICO WINDOWS DEFENDER. [91mAVANZADO
+echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO
 		echo "C:\Program Files\WindowsApps" >nul
 		
 echo.
