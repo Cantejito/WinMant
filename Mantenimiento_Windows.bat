@@ -1,6 +1,8 @@
 @echo Off
 
-SET ver=Version 0.18.1.2
+chcp 65001
+
+SET ver=Version 0.18.1.3
 SET url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 SET temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -36,22 +38,22 @@ echo [97m----------------------------------------------------------------------
 
 echo. & echo [92m----- %ver%[0m
 
-echo. & echo [41m---------------------------IMPORTANTE! LEA ATENTAMENTE!---------------------------[0m
+echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
 
-echo. & echo ----- [7mPUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA DEL RATON.[0m
+echo. & echo ----- [7mPUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA DEL RATÓN.[0m
 
 echo. & echo [93m----- LEA ATENTAMENTE TODO LO QUE REPORTE LA HERRAMIENTA.
 
-echo. & echo ----- SI ESTA POR CUENTA PROPIA, PRESTE ESPECIAL ATENCION A LAS RECOMENDACIONES.
+echo. & echo ----- SI ESTÁ POR CUENTA PROPIA, PRESTE ESPECIAL ATENCIÓN A LAS RECOMENDACIONES.
 
 echo. & echo ----- NO USE LA HERRAMIENTA SI HAY ACTUALIZACIONES EN CURSO.
 
 echo. & echo ----- NO ME HAGO RESPONSABLE DE: MAL USO DE LA HERRAMIENTA, PROBLEMAS CAUSADOS
 		echo       AL SOFTWARE/HARDWARE O PERDIDA DE DATOS.
 
-echo. & echo ----- ESPERE A QUE SE COMPLETE LA OPERACION ANTES DE CERRAR LA HERRAMIENTA.
+echo. & echo ----- ESPERE A QUE SE COMPLETE LA OPERACIÓN ANTES DE CERRAR LA HERRAMIENTA.
 
-echo. & echo ----- SE RECOMIENDA TENER WINDOWS COMPLETAMENTE ACTUALIZADO
+echo. & echo ----- SE RECOMIENDA TENER WINDOWS COMPLETAMENTE ACTUALIZADO.
 
 echo. & echo ----- SE RECOMIENDA CERRAR TODOS LOS PROGRAMAS ANTES DE EJECUTAR LA HERRAMIENTA.
 
@@ -59,9 +61,9 @@ echo. & echo ----- SE RECOMIENDA DESACTIVAR EL ANTIVIRUS PARA MEJORAR LA VELOCID
 
 echo. & echo ----- SEA PACIENTE, ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS EN COMPLETARSE.[0m
 
-echo. & echo [41m---------------------------IMPORTANTE! LEA ATENTAMENTE!---------------------------[0m
+echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
 
-echo. & echo [97m----- Pulse INTRO si ha leido, entiende y acepta todo lo anterior.
+echo. & echo [97m----- Pulse INTRO si ha leído, entiende y acepta todo lo anterior.
 
 echo. & echo ----------------------------------------------------------------------------------[0m& Pause >nul & CLS
 
@@ -74,9 +76,9 @@ echo. & echo ----- Buscando actualizaciones... & COLOR 09
 curl -C - -o %temp% %url% -s
 	find "%Ver%" %temp% > nul 2>&1
 		if %errorlevel% equ 1 (
-			echo. & echo [93m----- Nueva version disponible. Al actualizar, la herramienta se cerrara.[0m
+			echo. & echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
 			echo [97m
-			CHOICE /C SN /N /M "----- Actualizar? (Recomendado) [S/N]: "
+			CHOICE /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
 				IF ERRORLEVEL == 2 GOTO MENU
 					echo. & echo ----- Actualizando...
 					move /y "%temp%" "%~dp0" > nul 2>&1
@@ -102,11 +104,11 @@ echo. & echo ----- 0 para SALIR
 echo. & echo ----- 1 para MANTENIMIENTO COMPLETO.
 echo. & echo ----- 2 para VERIFICAR ESTADO DE WINDOWS.
 echo. & echo ----- 3 para LIMPIEZA DE ARCHIVOS TEMPORALES.
-echo. & echo ----- 4 para COMPROBACION Y REPARACION DE DISCOS.
-echo. & echo ----- 5 para ACTIVAR/DESACTIVAR HIBERNACION.
+echo. & echo ----- 4 para COMPROBACIÓN Y REPARACIÓN DE DISCOS.
+echo. & echo ----- 5 para ACTIVAR/DESACTIVAR HIBERNACIÓN.
 echo. & echo ----- 6 para REESTABLECIMIENTO DE RED.
-echo. & echo ----- 7 para ANALISIS DE MEMORIA.
-echo. & echo ----- 8 para ANALISIS AUTOMATICO WINDOWS DEFENDER. [91mAVANZADO
+echo. & echo ----- 7 para ANÁLISIS DE MEMORIA.
+echo. & echo ----- 8 para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER. [91mAVANZADO
 echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO
 		echo "C:\Program Files\WindowsApps" >nul
 		
@@ -148,14 +150,14 @@ echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
 
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
 	
-			Color 4F & echo ----- !!!POSIBLE CORRUPCION DEL SISTEMA OPERATIVO!!!
+			Color 4F & echo ----- ¡¡¡POSIBLE CORRUPCIÓN DEL SISTEMA OPERATIVO!!!
 	
 			echo.
 			echo ----- Reinicie la herramienta y ejecute "VERIFICAR ESTADO DE WINDOWS".
 	
 			echo.
 			echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-			echo ----- importantes y pongase en contacto con un tecnico para recibir asesoramiento.)
+			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.)
 	
 			echo.
 			echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU )
@@ -193,17 +195,17 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 	PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 	
 	echo.
-	echo [93m----- ATENCION: En la fase final del siguiente paso se ejecutaran dos ventanas.
-	echo ----- Un bug de Windows evita su cierre automatico al finalizar.
+	echo [93m----- ATENCIÓN: En la fase final del siguiente paso se ejecutarán dos ventanas.
+	echo ----- Un bug de Windows evita su cierre automático al finalizar.
 	echo ----- Para completar el paso es necesario que el usuario actualice su estado
-	echo ----- pasando el raton por encima de dichas ventanas.
-	echo ----- Si pasa el raton y no se cierran espere un minuto e intentelo de nuevo.[0m
+	echo ----- pasando el ratón por encima de dichas ventanas.
+	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo.[0m
 	echo.
 	
 	echo [94m----- Paso 12 de 12...
 	cleanmgr /verylowdisk /sagerun /f
 
-	echo. & echo ----- Puede liberar mas espacio desactivando la hibernacion.[0m
+	echo. & echo ----- Puede liberar mas espacio desactivando la hibernación.[0m
 
 GOTO COMPLETADO.REINICIO
 
@@ -228,14 +230,14 @@ echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
 
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
 	
-			Color 4F & echo ----- !!!POSIBLE CORRUPCION DEL SISTEMA OPERATIVO!!!
+			Color 4F & echo ----- !!!POSIBLE CORRUPCIÓN DEL SISTEMA OPERATIVO!!!
 	
 			echo.
 			echo ----- Reinicie la herramienta y ejecute "VERIFICAR ESTADO DE WINDOWS".
 	
 			echo.
 			echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-			echo ----- importantes y pongase en contacto con un tecnico para recibir asesoramiento.)
+			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.)
 	
 			echo.
 			echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU )
@@ -282,17 +284,17 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 	
 	echo.
-	echo [93m----- ATENCION: En la fase final del siguiente paso se ejecutaran dos ventanas.
-	echo ----- Un bug de Windows evita su cierre automatico al finalizar.
+	echo [93m----- ATENCION: En la fase final del siguiente paso se ejecutarán dos ventanas.
+	echo ----- Un bug de Windows evita su cierre automático al finalizar.
 	echo ----- Para completar el paso es necesario que el usuario actualice su estado
-	echo ----- pasando el raton por encima de dichas ventanas.
-	echo ----- Si pasa el raton y no se cierran espere un minuto e intentelo de nuevo.[0m
+	echo ----- pasando el ratón por encima de dichas ventanas.
+	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo.[0m
 	echo.
 	
 	echo [94m----- Paso 10 de 10...
 	cleanmgr /verylowdisk /sagerun /f
 
-	echo. & echo ----- Puede liberar mas espacio desactivando la hibernacion.[0m
+	echo. & echo ----- Puede liberar mas espacio desactivando la hibernación.[0m
 
 GOTO COMPLETADO.REINICIO
 
@@ -310,11 +312,11 @@ echo. & echo ----- Comprobando discos... & COLOR 09
 			chkdsk /r /scan /perf >nul
 			
 			echo.
-			echo ----- Reinicie la herramienta y ejecute "COMPROBACION Y REPARACION DE DISCOS".
+			echo ----- Reinicie la herramienta y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS".
 			
 			echo.
 			echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-			echo ----- importantes y pongase en contacto con un tecnico para recibir asesoramiento.
+			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.
 	
 			echo.
 			echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU )
@@ -327,7 +329,7 @@ CLS
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Obteniendo ajustes de hibernacion... & COLOR 09
+echo. & echo ----- Obteniendo ajustes de hibernación... & COLOR 09
 	
 	PowerShell Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Power -name HibernateEnabled >$null
 	IF %ERRORLEVEL% == 1 GOTO HIB.CHECK
@@ -347,10 +349,10 @@ echo. & echo ----- Obteniendo ajustes de hibernacion... & COLOR 09
 			
 				:HIB.OFF
 				powercfg.exe /hibernate off >nul & echo.
-				echo. & echo ----- Hibernacion desactivada. & GOTO COMPLETADO
+				echo. & echo ----- hibernación desactivada. & GOTO COMPLETADO
 				
 				:HIB.NONE
-				echo. & echo ----- La configuracion no ha sido modificada. & GOTO COMPLETADO
+				echo. & echo ----- La configuración no ha sido modificada. & GOTO COMPLETADO
 				
 		:HIB.CHECK
 		echo.
@@ -369,10 +371,10 @@ echo. & echo ----- Obteniendo ajustes de hibernacion... & COLOR 09
 			
 				:HIB.ON
 				powercfg.exe /hibernate on >nul & echo.
-				echo ----- Hibernacion activada. & GOTO COMPLETADO
+				echo ----- hibernación activada. & GOTO COMPLETADO
 				
 				:HIB.NONE
-				echo. & echo ----- La configuracion no ha sido modificada. & GOTO COMPLETADO
+				echo. & echo ----- La configuración no ha sido modificada. & GOTO COMPLETADO
 				
 :RED
 
@@ -402,11 +404,11 @@ CLS
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Ejecutando programandor de analisis... & COLOR 09
+echo. & echo ----- Ejecutando programandor de análisis... & COLOR 09
 	
 	mdsched.exe
 
-echo. & echo [93m----- La duracion del analisis puede tardar varias horas.[0m
+echo. & echo [93m----- La duracion del análisis puede tardar varias horas.[0m
 		
 		echo. & echo [97m----- Pulse INTRO para continuar[0m & pause >nul
 		
@@ -418,7 +420,7 @@ CLS
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- [91mATENCION! EL USO INADECUADO DE ESTA FUNCION PUEDE COMPROMETER SU SISTEMA.[0m
+echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCIÓN PUEDE COMPROMETER SU SISTEMA.[0m
 	echo.
 
 echo. & echo [97m----- M para MENU.
@@ -439,7 +441,7 @@ CLS
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Obteniendo ajustes de analisis automatico... & COLOR 09
+echo. & echo ----- Obteniendo ajustes de análisis automatico... & COLOR 09
 
 	schtasks /query /tn "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /fo list >nul > C:\Windows\Temp\WDSSTemp.txt 2>nul
 
@@ -460,11 +462,11 @@ echo. & echo ----- Obteniendo ajustes de analisis automatico... & COLOR 09
 			
 				:DEF.OFF
 				schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-				echo. & echo ----- Analisis automatico desactivado.
+				echo. & echo ----- Análisis automático desactivado.
 				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 				:DEF.NONE
-				echo. & echo ----- La configuracion no ha sido modificada.
+				echo. & echo ----- La configuración no ha sido modificada.
 				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 		:DEF.CHECK
@@ -484,11 +486,11 @@ echo. & echo ----- Obteniendo ajustes de analisis automatico... & COLOR 09
 			
 				:DEF.ON
 				schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-				echo. & echo ----- Analisis automatico desactivado.
+				echo. & echo ----- Análisis automático desactivado.
 				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 				:DEF.NONE
-				echo. & echo ----- La configuracion no ha sido modificada.
+				echo. & echo ----- La configuración no ha sido modificada.
 				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
 				
 :WINDOWSAPPS
@@ -497,7 +499,7 @@ CLS
 
 echo [97m----------------------------------------------------------------------------------
 
-echo. & echo ----- [91mATENCION! EL USO INADECUADO DE ESTA FUNCION PUEDE COMPROMETER SU SISTEMA.[0m
+echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCION PUEDE COMPROMETER SU SISTEMA.[0m
 	echo.
 
 echo. & echo [97m----- M para MENU.
@@ -530,7 +532,7 @@ GOTO COMPLETADO
 
 echo.
 echo. & echo ----- Completado. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menu.
+echo. & echo ----- Pulse INTRO para volver al menú.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
 
@@ -538,7 +540,7 @@ echo. & echo -------------------------------------------------------------------
 
 echo.
 echo. & echo ----- Completado. Se recomienda reiniciar. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menu.
+echo. & echo ----- Pulse INTRO para volver al menú.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
 
@@ -546,6 +548,6 @@ echo. & echo -------------------------------------------------------------------
 
 echo.
 echo. & echo ----- No hay actualizaciones disponibles. & COLOR 0A
-echo. & echo ----- Pulse INTRO para ir al menu.
+echo. & echo ----- Pulse INTRO para ir al menú.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
