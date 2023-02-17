@@ -1,6 +1,6 @@
 @echo Off
 
-SET ver=Version 0.18.1
+SET ver=Version 0.18.1.1
 SET url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 SET temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -74,22 +74,20 @@ echo. & echo ----- Buscando actualizaciones... & COLOR 09
 curl -C - -o %temp% %url% -s
 	find "%Ver%" "%temp%" > nul 2>&1
 		if %errorlevel% equ 1 (
-		
-		echo. & echo [93m----- Nueva version disponible. Al actualizar, la herramienta se cerrara.[0m
-		echo [97m
-		CHOICE /C SN /N /M "----- Actualizar? (Recomendado) [S/N]: "
-			IF ERRORLEVEL == 2 DEL %temp% & GOTO MENU
-			
-				echo.
-				echo ----- Actualizando...
-				move /y "%temp%" "%~dp0" > nul 2>&1
-				EXIT
-				
+			echo. & echo [93m----- Nueva version disponible. Al actualizar, la herramienta se cerrara.[0m
+			echo [97m
+			CHOICE /C SN /N /M "----- Actualizar? (Recomendado) [S/N]: "
+				IF ERRORLEVEL == 2 GOTO MENU
+					echo. & echo ----- Actualizando...
+					move /y "%temp%" "%~dp0" > nul 2>&1
+						EXIT
 			) ELSE (
-				GOTO COMPLETADO.NOUPDATE
+				GOTO NOUPDATE
 				)
 
 :MENU
+
+DEL %temp%
 
 CLS
 
@@ -544,18 +542,10 @@ echo. & echo ----- Pulse INTRO para volver al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
 
-:COMPLETADO.NOUPDATE
+:NOUPDATE
 
 echo.
 echo. & echo ----- No hay actualizaciones disponibles. & COLOR 0A
 echo. & echo ----- Pulse INTRO para ir al menu.
 
 echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
-
-:COMPLETADO.UPDATE
-
-echo.
-echo. & echo ----- Actualizacion completada. Es necesario reiniciar la herramienta. & COLOR 0A
-echo. & echo ----- Pulse INTRO para salir.
-
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & Exit
