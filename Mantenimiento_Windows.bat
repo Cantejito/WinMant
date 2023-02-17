@@ -72,7 +72,7 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -C - -o %temp% %url% -s
-	find %Ver% "%temp%" > nul 2>&1
+	find "%Ver%" %temp% > nul 2>&1
 		if %errorlevel% equ 1 (
 			echo. & echo [93m----- Nueva version disponible. Al actualizar, la herramienta se cerrara.[0m
 			echo [97m
