@@ -1,6 +1,6 @@
 @echo Off
 
-set ver=Version 0.18.2.0
+set ver=Version 0.18.2.1
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -75,7 +75,9 @@ echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -o %temp% %url% -s
 fc "%ver%" %temp% > nul 2>&1
-if errorlevel 2 (
+if %errorlevel% == 0 (
+	goto MENU
+) else (
 	echo.
 	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
 	echo [97m
@@ -84,9 +86,7 @@ if errorlevel 2 (
 	echo.
 	echo ----- Actualizando...
 	move /y "%temp%" "%~dp0" > nul 2>&1
-	exit
-) else (
-	goto MENU
+	exit	
 )
 
 :MENU
