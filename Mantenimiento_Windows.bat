@@ -74,7 +74,7 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -C - -o %temp% %url% -s
-fc /L "%ver%" %temp% > nul 2>&1
+fc "%ver%" %temp% > nul 2>&1
 if errorlevel 2 (
 	echo.
 	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
