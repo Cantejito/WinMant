@@ -1,6 +1,6 @@
 @echo Off
 
-set ver=Version 0.18.1.5
+set ver=Version 0.18.2.0
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -79,14 +79,14 @@ if %errorlevel% equ 1 (
 	echo.
 	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
 	echo [97m
-	CHOICE /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-	if %errorlevel% equ 2 GOTO MENU
+	choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
+	if %errorlevel% equ 2 goto MENU
 	echo.
 	echo ----- Actualizando...
 	move /y "%temp%" "%~dp0" > nul 2>&1
-	EXIT
-) ELSE (
-	GOTO MENU
+	exit
+) else (
+	goto MENU
 )
 
 :MENU
