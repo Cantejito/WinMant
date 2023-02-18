@@ -74,7 +74,7 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -o %temp% %url% -s
-fc "%ver%" %temp% > nul 2>&1
+fc %~dp0 %temp% > nul 2>&1
 if %errorlevel% == 0 (
 	goto MENU
 ) else (
