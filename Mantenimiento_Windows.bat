@@ -1,15 +1,15 @@
 @echo Off
 
-SET ver=Version 0.18.1.4
-SET url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
-SET temp=C:\Windows\Temp\Mantenimiento_Windows.bat
+set ver=Version 0.18.2.0
+set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
+set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
-SETLOCAL EnableExtensions
+setlocal EnableExtensions
 
 chcp 65001
 
 NET SESSION >nul 2>& 1
-IF %ERRORLEVEL% == 0 GOTO AVISO
+if %ERRORLEVEL% == 0 goto AVISO
 
 MODE CON: COLS=82 LINES=11
 
@@ -24,7 +24,7 @@ echo. & echo ----- HAGA CLIC DERECHO EN EL ARCHIVO Y SELECCIONE "EJECUTAR COMO A
 echo.
 echo. & echo ----- Pulse INTRO para salir.
 
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & Exit
+echo. & echo ----------------------------------------------------------------------------------& pause >nul & exit
 
 echo ----------------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!----
 
 echo. & echo [97m----- Pulse INTRO si ha leído, entiende y acepta todo lo anterior.
 
-echo. & echo ----------------------------------------------------------------------------------[0m& Pause >nul & CLS
+echo. & echo ----------------------------------------------------------------------------------[0m& pause >nul & CLS
 
 :UPDATE
 
@@ -74,19 +74,19 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -C - -o %temp% %url% -s
-find "%ver%" %temp% > nul 2>&1
-if %errorlevel% equ 1 (
+fc "%ver%" %temp% > nul 2>&1
+if errorlevel 1 (
 	echo.
 	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
 	echo [97m
-	CHOICE /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-	if %errorlevel% equ 2 GOTO MENU
+	choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
+	if errorlevel 2 goto MENU
 	echo.
 	echo ----- Actualizando...
 	move /y "%temp%" "%~dp0" > nul 2>&1
-	EXIT
-) ELSE (
-	GOTO MENU
+	exit
+) else (
+	goto MENU
 )
 
 :MENU
@@ -99,7 +99,7 @@ COLOR 0F
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo [92m----- MENU PRINCIPAL - %ver%
+echo. & echo [92m----- MENÚ PRINCIPAL - %ver%
 
 echo. [97m
 echo. & echo ----- 0 para SALIR
@@ -117,19 +117,19 @@ echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO
 echo.
 echo.
 set /p Q=[97m----- Ejecutar...[0m 
-	if "%Q%" == "" GOTO MENU
-	if /I %Q% == M GOTO MENU
-	if /I %Q% == 0 EXIT
-	if /I %Q% == 1 GOTO COMPLETO
-	if /I %Q% == 2 GOTO ESTADO
-	if /I %Q% == 3 GOTO TEMP
-	if /I %Q% == 4 GOTO DISCOS
-	if /I %Q% == 5 GOTO HIBERNAR
-	if /I %Q% == 6 GOTO RED
-	if /I %Q% == 7 GOTO MEMORIA
-	if /I %Q% == 8 GOTO DEFENDER
-	if /I %Q% == 9 GOTO WINDOWSAPPS
-	GOTO MENU
+	if "%Q%" == "" goto MENU
+	if /I %Q% == M goto MENU
+	if /I %Q% == 0 exit
+	if /I %Q% == 1 goto COMPLETO
+	if /I %Q% == 2 goto ESTADO
+	if /I %Q% == 3 goto TEMP
+	if /I %Q% == 4 goto DISCOS
+	if /I %Q% == 5 goto HIBERNAR
+	if /I %Q% == 6 goto RED
+	if /I %Q% == 7 goto MEMORIA
+	if /I %Q% == 8 goto DEFENDER
+	if /I %Q% == 9 goto WINDOWSAPPS
+	goto MENU
 
 :COMPLETO
 
@@ -137,7 +137,7 @@ CLS
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
+echo. & echo ----- Verificando estado de Windows... & color 09 & echo.
 	
 	echo ----- Paso 1 de 12...
 	DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
@@ -152,7 +152,7 @@ echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
 
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
 	
-			Color 4F & echo ----- ¡¡¡POSIBLE CORRUPCIÓN DEL SISTEMA OPERATIVO!!!
+			color 4F & echo ----- ¡¡¡POSIBLE CORRUPCIÓN DEL SISTEMA OPERATIVO!!!
 	
 			echo.
 			echo ----- Reinicie la herramienta y ejecute "VERIFICAR ESTADO DE WINDOWS".
@@ -162,7 +162,7 @@ echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
 			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.)
 	
 			echo.
-			echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU )
+			echo ----------------------------------------------------------------------------------& pause >nul & goto MENU)
 	
 	echo ----- Paso 2 de 12...
 	SFC /scannow >nul
@@ -209,7 +209,7 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 
 	echo. & echo ----- Puede liberar mas espacio desactivando la hibernación.[0m
 
-GOTO COMPLETADO.REINICIO
+goto COMPLETADO.REINICIO
 
 :ESTADO
 
@@ -242,12 +242,12 @@ echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
 			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.)
 	
 			echo.
-			echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU )
+			echo ----------------------------------------------------------------------------------& pause >nul & goto MENU)
 	
 	echo ----- Paso 2 de 2...
 	SFC /scannow >nul
 
-GOTO COMPLETADO.REINICIO
+goto COMPLETADO.REINICIO
 
 :TEMP
 
@@ -298,7 +298,7 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 
 	echo. & echo ----- Puede liberar mas espacio desactivando la hibernación.[0m
 
-GOTO COMPLETADO.REINICIO
+goto COMPLETADO.REINICIO
 
 :DISCOS
 
@@ -321,9 +321,9 @@ echo. & echo ----- Comprobando discos... & COLOR 09
 			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.
 	
 			echo.
-			echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU )
+			echo ----------------------------------------------------------------------------------& pause >nul & goto MENU)
 			
-GOTO COMPLETADO
+goto COMPLETADO
 
 :HIBERNAR
 
@@ -333,45 +333,31 @@ echo ---------------------------------------------------------------------------
 echo.
 echo ----- Obteniendo ajustes de hibernación... & COLOR 09
 
-REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled > nul 2>&1
-IF %ERRORLEVEL% == 0 GOTO HIB.CHECK
+REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled >nul 2>&1
+if errorlevel == 0 goto HIBN
 	echo.
-	echo.	
-	echo [93m----- Estado actual: Activada.[0m & echo [94m
-		
+	echo.
+	echo [93m----- Estado actual: Activado.[0m & echo [94m
 	echo. & echo ----- 1 para Desactivar.
-	echo. & echo ----- 2 para No modificar.
+	echo. & echo ----- 2 para Volver al menú.
 	echo. & echo.
-		
-	SET /P HIB=----- Ejecutar... & echo [0m
-		IF /I %HIB% == 1 GOTO HIB.OFF
-		IF /I %HIB% == 2 GOTO HIB.NONE
-		GOTO HIBERNAR
-				
-:HIB.CHECK
+	set /P HIB=----- Ejecutar... & echo [0m
+		if /I %HIB% == 1 (powercfg.exe /hibernate off > nul 2>&1 & echo
+		echo. & echo ----- Hibernación desactivada. & goto COMPLETADO)
+		if /I %HIB% == 2 goto MENU
+		goto HIBERNAR
+:HIBN
 	echo.
-	echo.	
-	echo [93m----- Estado actual: Desactivada.[0m & echo [94m
-		
+	echo.
+	echo [93m----- Estado actual: Desactivado.[0m & echo [94m		
 	echo. & echo ----- 1 para Activar.
-	echo. & echo ----- 2 para No modificar.
-	echo. & echo.
-		
-	SET /P HIB=----- Ejecutar... & echo [0m
-		IF /I %HIB% == 1 GOTO HIB.ON
-		IF /I %HIB% == 2 GOTO HIB.NONE
-		GOTO HIBERNAR
-			
-:HIB.ON
-powercfg.exe /hibernate on >nul & echo.
-echo ----- Hibernación activada. & GOTO COMPLETADO
-		
-:HIB.OFF
-powercfg.exe /hibernate off >nul & echo.
-echo. & echo ----- Hibernación desactivada. & GOTO COMPLETADO
-		
-:HIB.NONE
-echo. & echo ----- La configuración no ha sido modificada. & GOTO COMPLETADO
+	echo. & echo ----- 2 para Volver al menú.
+	echo. & echo.	
+	set /P HIB=----- Ejecutar... & echo [0m
+		if /I %HIB% == 1 (powercfg.exe /hibernate on > nul 2>&1 & echo.
+		echo. & echo ----- Hibernación activada. & goto COMPLETADO)
+		if /I %HIB% == 2 goto MENU
+		goto HIBERNAR
 
 :RED
 
@@ -393,7 +379,7 @@ echo. & echo ----- Reestableciendo red... & COLOR 09
 	
 	ipconfig /registerdns
 
-GOTO COMPLETADO.REINICIO
+goto COMPLETADO.REINICIO
 
 :MEMORIA
 
@@ -409,7 +395,7 @@ echo. & echo [93m----- La duracion del análisis puede tardar varias horas.[0m
 		
 		echo. & echo [97m----- Pulse INTRO para continuar[0m & pause >nul
 		
-GOTO COMPLETADO.REINICIO
+goto COMPLETADO.REINICIO
 
 :DEFENDER
 
@@ -427,10 +413,10 @@ echo. & echo ----- CONFIRMAR para EJECUTAR COMANDO.
 echo.
 echo.
 SET /P WA=----- Ejecutar... [0m 
-	IF "%WA%" == "" GOTO DEFENDER
-	IF /I %WA% == M GOTO MENU
-	IF /I %WA% == CONFIRMAR GOTO DEFENDER.CONFIRM
-	GOTO DEFENDER
+	if "%WA%" == "" goto DEFENDER
+	if /I %WA% == M goto MENU
+	if /I %WA% == CONFIRMAR goto DEFENDER.CONFIRM
+	goto DEFENDER
 
 :DEFENDER.CONFIRM
 
@@ -438,58 +424,36 @@ CLS
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Obteniendo ajustes de análisis automatico... & COLOR 09
+echo. & echo ----- Obteniendo ajustes de análisis automático... & COLOR 09
 
-	schtasks /query /tn "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /fo list >nul > C:\Windows\Temp\WDSSTemp.txt 2>nul
-
-	find "Deshabilitado" C:\Windows\Temp\WDSSTemp.txt >nul && GOTO DEF.CHECK
-	
+schtasks /query /tn "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /fo list > C:\Windows\Temp\WDSSTemp.txt 2>nul
+find "Deshabilitado" C:\Windows\Temp\WDSSTemp.txt >nul && goto DEF.CHECK
 	echo.
 	echo.
 	echo [93m----- Estado actual: Activado.[0m & echo [94m
-		
-		echo. & echo ----- 1 para Desactivar.
-		echo. & echo ----- 2 para No modificar.
-		echo. & echo.
-		
-		SET /P DEF=----- Ejecutar... & echo [0m
-			IF /I %DEF% == 1 GOTO DEF.OFF
-			IF /I %DEF% == 2 GOTO DEF.NONE
-			GOTO DEFENDER.CONFIRM
-			
-				:DEF.OFF
-				schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-				echo. & echo ----- Análisis automático desactivado.
-				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
-				
-				:DEF.NONE
-				echo. & echo ----- La configuración no ha sido modificada.
-				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
-				
-		:DEF.CHECK
-		echo.
-		echo.
-		
-		echo [93m----- Estado actual: Desactivado.[0m & echo [94m
-		
-		echo. & echo ----- 1 para Activar.
-		echo. & echo ----- 2 para No modificar.
-		echo. & echo.
-		
-		SET /P DEF=----- Ejecutar... & echo [0m
-			IF /I %DEF% == 1 GOTO DEF.ON
-			IF /I %DEF% == 2 GOTO DEF.NONE
-			GOTO DEFENDER.CONFIRM
-			
-				:DEF.ON
-				schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-				echo. & echo ----- Análisis automático desactivado.
-				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
-				
-				:DEF.NONE
-				echo. & echo ----- La configuración no ha sido modificada.
-				del C:\Windows\Temp\WDSSTemp.txt 2>nul & GOTO COMPLETADO
-				
+	echo. & echo ----- 1 para Desactivar.
+	echo. & echo ----- 2 para Volver al menú.
+	echo. & echo.
+	set /P DEF=----- Ejecutar... & echo [0m
+		if /I %DEF% == 1 (schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
+		echo. & echo ----- Análisis automático desactivado.
+		del C:\Windows\Temp\WDSSTemp.txt 2>nul & goto COMPLETADO)
+		if /I %DEF% == 2 goto MENU
+		goto DEFENDER.CONFIRM
+:DEF.CHECK
+	echo.
+	echo.		
+	echo [93m----- Estado actual: Desactivado.[0m & echo [94m		
+	echo. & echo ----- 1 para Activar.
+	echo. & echo ----- 2 para Volver al menú.
+	echo. & echo.	
+	set /P DEF=----- Ejecutar... & echo [0m
+		if /I %DEF% == 1 (schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
+		echo. & echo ----- Análisis automático desactivado.
+		del C:\Windows\Temp\WDSSTemp.txt 2>nul & goto COMPLETADO)
+		if /I %DEF% == 2 goto MENU
+		goto DEFENDER.CONFIRM
+
 :WINDOWSAPPS
 
 CLS
@@ -506,10 +470,10 @@ echo. & echo ----- CONFIRMAR para EJECUTAR COMANDO.
 echo.
 echo.
 SET /P WA=----- Ejecutar... [0m
-	IF "%WA%" == "" GOTO WINDOWSAPPS
-	IF /I %WA% == M GOTO MENU
-	IF /I %WA% == CONFIRMAR GOTO WINDOWSAPPS.CONFIRM
-	GOTO WINDOWSAPPS
+	if "%WA%" == "" goto WINDOWSAPPS
+	if /I %WA% == M goto MENU
+	if /I %WA% == CONFIRMAR goto WINDOWSAPPS.CONFIRM
+	goto WINDOWSAPPS
 
 :WINDOWSAPPS.CONFIRM
 
@@ -517,13 +481,10 @@ echo. & echo -------------------------------------------------------------------
 
 echo. & echo ----- Otorgando permisos en C:\Program Files\WindowsApps... & COLOR 09
 	
-	takeown /f "C:\Program Files\WindowsApps" /r >nul
-	
-	icacls "C:\Program Files\WindowsApps" /reset /t >nul
-	
-	start %windir%\explorer.exe "C:\Program Files\WindowsApps" >nul
-	
-GOTO COMPLETADO
+takeown /f "C:\Program Files\WindowsApps" /r >nul
+icacls "C:\Program Files\WindowsApps" /reset /t >nul
+start %windir%\explorer.exe "C:\Program Files\WindowsApps" >nul
+goto COMPLETADO
 	
 :COMPLETADO
 
@@ -531,7 +492,7 @@ echo.
 echo. & echo ----- Completado. & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menú.
 
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
+echo. & echo ----------------------------------------------------------------------------------& pause >nul & goto MENU
 
 :COMPLETADO.REINICIO
 
@@ -539,12 +500,4 @@ echo.
 echo. & echo ----- Completado. Se recomienda reiniciar. & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menú.
 
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
-
-:NOUPDATE
-
-echo.
-echo. & echo ----- No hay actualizaciones disponibles. & COLOR 0A
-echo. & echo ----- Pulse INTRO para ir al menú.
-
-echo. & echo ----------------------------------------------------------------------------------& Pause >nul & GOTO MENU
+echo. & echo ----------------------------------------------------------------------------------& pause >nul & goto MENU
