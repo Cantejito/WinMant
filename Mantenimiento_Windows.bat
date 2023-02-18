@@ -73,7 +73,7 @@ echo ---------------------------------------------------------------------------
 
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
-curl -C - -o %temp% %url% -s
+curl -o %temp% %url% -s
 find "%ver%" %temp% > nul 2>&1
 if %errorlevel% equ 1 (
 	echo.
