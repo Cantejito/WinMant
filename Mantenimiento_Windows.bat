@@ -1,12 +1,12 @@
 @echo Off
 
+chcp 65001
+
 set ver=Versión 0.18.2.1
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
 setlocal EnableExtensions
-
-chcp 65001
 
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto AVISO
