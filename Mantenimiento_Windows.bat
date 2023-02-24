@@ -1,6 +1,6 @@
 @echo Off
 
-set ver=Version 0.18.2.0
+set ver=Version 0.18.2.1
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -24,9 +24,7 @@ echo. & echo ----- HAGA CLIC DERECHO EN EL ARCHIVO Y SELECCIONE "EJECUTAR COMO A
 echo.
 echo. & echo ----- Pulse INTRO para salir.
 
-echo. & echo ----------------------------------------------------------------------------------& pause >nul & exit
-
-echo ----------------------------------------------------------------------------------
+echo. & echo ---------------------------------------------------------------------------------- & pause >nul & exit
 
 :AVISO
 
@@ -162,7 +160,7 @@ echo. & echo ----- Verificando estado de Windows... & color 09 & echo.
 			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.)
 	
 			echo.
-			echo ----------------------------------------------------------------------------------& pause >nul & goto MENU)
+			echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU)
 	
 	echo ----- Paso 2 de 12...
 	SFC /scannow >nul
@@ -242,7 +240,7 @@ echo. & echo ----- Verificando estado de Windows... & COLOR 09 & echo.
 			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.)
 	
 			echo.
-			echo ----------------------------------------------------------------------------------& pause >nul & goto MENU)
+			echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU)
 	
 	echo ----- Paso 2 de 2...
 	SFC /scannow >nul
@@ -321,7 +319,7 @@ echo. & echo ----- Comprobando discos... & COLOR 09
 			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.
 	
 			echo.
-			echo ----------------------------------------------------------------------------------& pause >nul & goto MENU)
+			echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU)
 			
 goto COMPLETADO
 
@@ -492,7 +490,7 @@ echo.
 echo. & echo ----- Completado. & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menú.
 
-echo. & echo ----------------------------------------------------------------------------------& pause >nul & goto MENU
+echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 
 :COMPLETADO.REINICIO
 
@@ -500,4 +498,4 @@ echo.
 echo. & echo ----- Completado. Se recomienda reiniciar. & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menú.
 
-echo. & echo ----------------------------------------------------------------------------------& pause >nul & goto MENU
+echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
