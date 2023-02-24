@@ -1,6 +1,6 @@
 @echo Off
 
-set ver=Version 0.18.2.1
+set ver=Versión 0.18.2.1
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
