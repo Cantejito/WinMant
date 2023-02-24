@@ -2,7 +2,7 @@
 
 chcp 65001
 
-set ver=Versión 0.18.2.1
+set ver=Versión 0.18.6.1
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
