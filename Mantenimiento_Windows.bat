@@ -2,7 +2,7 @@
 
 chcp 65001
 
-set ver=Versión 0.18.6.1
+set ver=Versión 0.18.7.0
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -42,14 +42,13 @@ echo. & echo ----- [7mPUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA
 
 echo. & echo [93m----- LEA ATENTAMENTE TODO LO QUE REPORTE LA HERRAMIENTA.
 
-echo. & echo ----- SI ESTÁ POR CUENTA PROPIA, PRESTE ESPECIAL ATENCIÓN A LAS RECOMENDACIONES.
+echo. & echo ----- PRESTE ATENCIÓN A LAS RECOMENDACIONES.
 
 echo. & echo ----- NO USE LA HERRAMIENTA SI HAY ACTUALIZACIONES EN CURSO.
 
-echo. & echo ----- NO ME HAGO RESPONSABLE DE: MAL USO DE LA HERRAMIENTA, PROBLEMAS CAUSADOS
-		echo       AL SOFTWARE/HARDWARE O PÉRDIDA DE DATOS.
-
 echo. & echo ----- ESPERE A QUE SE COMPLETE LA OPERACIÓN ANTES DE CERRAR LA HERRAMIENTA.
+
+echo. & echo ----- ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS EN COMPLETARSE.
 
 echo. & echo ----- SE RECOMIENDA TENER WINDOWS COMPLETAMENTE ACTUALIZADO.
 
@@ -57,7 +56,8 @@ echo. & echo ----- SE RECOMIENDA CERRAR TODOS LOS PROGRAMAS ANTES DE EJECUTAR LA
 
 echo. & echo ----- SE RECOMIENDA DESACTIVAR EL ANTIVIRUS PARA MEJORAR LA VELOCIDAD DE TRABAJO.
 
-echo. & echo ----- SEA PACIENTE, ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS EN COMPLETARSE.[0m
+echo. & echo ----- NO ME HAGO RESPONSABLE DEL MAL USO DE LA HERRAMIENTA, PÉRDIDA DE DATOS Y
+		echo       PROBLEMAS CAUSADOS AL SOFTWARE O HARDWARE.[0m
 
 echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
 
@@ -100,7 +100,7 @@ echo ---------------------------------------------------------------------------
 echo. & echo [92m----- MENÚ PRINCIPAL - %ver%
 
 echo. [97m
-echo. & echo ----- 0 para SALIR
+echo. & echo ----- 0 para SALIR.
 echo. & echo ----- 1 para MANTENIMIENTO COMPLETO.
 echo. & echo ----- 2 para VERIFICAR ESTADO DE WINDOWS.
 echo. & echo ----- 3 para LIMPIEZA DE ARCHIVOS TEMPORALES.
@@ -108,8 +108,8 @@ echo. & echo ----- 4 para COMPROBACIÓN Y REPARACIÓN DE DISCOS.
 echo. & echo ----- 5 para ACTIVAR/DESACTIVAR HIBERNACIÓN.
 echo. & echo ----- 6 para REESTABLECIMIENTO DE RED.
 echo. & echo ----- 7 para ANÁLISIS DE MEMORIA.
-echo. & echo ----- 8 para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER. [91mAVANZADO
-echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91mAVANZADO
+echo. & echo ----- 8 para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER. [91m[AVANZADO]
+echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps". [91m[AVANZADO]
 		echo "C:\Program Files\WindowsApps" >nul
 		
 echo.
