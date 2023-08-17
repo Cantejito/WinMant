@@ -2,7 +2,7 @@
 
 chcp 65001
 
-set ver=Versión 0.18.8.0
+set ver=Versión 0.18.8.1
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
@@ -72,19 +72,28 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Buscando actualizaciones... & COLOR 09
 
 curl -o %temp% %url% -s
+if errorlevel 1 (
+	echo. & echo [93m----- Error al conectarse a internet.[0m
+	timeout 5 >nul
+	goto MENU
+) else (
 find "%ver%" %temp% > nul 2>&1
-if %errorlevel% equ 1 (
+if errorlevel 1 (
 	echo.
 	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
 	echo [97m
 	choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-	if %errorlevel% equ 2 goto MENU
+	if errorlevel 2 (
+	goto MENU
+	) else (
 	echo.
 	echo ----- Actualizando...
 	move /y "%temp%" "%~dp0" > nul 2>&1
 	exit
+	)
 ) else (
 	goto MENU
+)
 )
 
 :MENU
@@ -502,7 +511,7 @@ echo. & echo -------------------------------------------------------------------
 
 ==========
 
-**Versión actual: 0.18.8.0**
+**Versión actual: 0.18.8.1**
 
 **- Cambios -**
 	• **Añadido en 0.18.0.0**
@@ -530,10 +539,6 @@ echo. & echo -------------------------------------------------------------------
 		· Notas de versión añadidas (no accesibles desde la herramienta).
 	
 **- Errores -**
-	• **Introducido en 0.18.0.0**
-		· Actualizar sin conexión a internet genera un bucle, dejando inservible la herramienta.
-	• **Introducido en 0.18.1.0**
-		· Actualizar sin conexión a internet genera un bucle. Se puede evitar denegando la actualización.
 	• **Introducido en 0.18.4.0**
 		· Llamadas a PowerShell cambian la tipografía.
 	
@@ -552,6 +557,10 @@ echo. & echo -------------------------------------------------------------------
 		· ~~Errores ortográficos.~~
 	• **Corregido en 0.18.8.0**
 		· ~~Errores ortográficos.~~
+	• **Corregido en 0.18.8.1**
+		· Actualizar sin conexión a internet genera un bucle, dejando inservible la herramienta.
+	• **Corregido en 0.18.8.1**
+		· Actualizar sin conexión a internet genera un bucle. Se puede evitar denegando la actualización.
 		
 ==========
 
