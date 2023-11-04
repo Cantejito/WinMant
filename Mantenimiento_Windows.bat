@@ -2,11 +2,12 @@
 
 chcp 65001
 
-set ver=Versión 0.18.8.1
+set ver=0.18.9.0
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
 setlocal EnableExtensions
+setlocal EnableDelayedExpansion
 
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto AVISO
@@ -34,7 +35,7 @@ CLS
 
 echo [97m----------------------------------------------------------------------------------
 
-echo. & echo [92m----- %ver%[0m
+echo. & echo [92m----- Versión %ver%[0m
 
 echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
 
@@ -69,31 +70,39 @@ echo. & echo -------------------------------------------------------------------
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo ----- Buscando actualizaciones... & COLOR 09
+echo.
+echo [92m----- Versión actual: %ver%
+
+echo.
+echo [94m----- Buscando actualizaciones...
 
 curl -o %temp% %url% -s
 if errorlevel 1 (
-	echo. & echo [93m----- Error al conectarse a internet.[0m
+	echo.
+	echo [93m----- Error al conectarse a internet.
 	timeout 5 >nul
 	goto MENU
 ) else (
-find "%ver%" %temp% > nul 2>&1
-if errorlevel 1 (
-	echo.
-	echo [93m----- Nueva versión disponible. Al actualizar, la herramienta se cerrará.[0m
-	echo [97m
-	choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-	if errorlevel 2 (
-	goto MENU
+    findstr /C:"set ver=" %temp% > %temp%.new
+    set /p ver_new=<"%temp%.new"
+    for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
+    del "%temp%.new"
+    if !ver_new! gtr !ver! (
+		echo.
+		echo [93m----- Nueva versión disponible: !ver_new!
+		echo.
+		echo [91m----- Al actualizar, la herramienta se reiniciará.
+		echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
+		if errorlevel 2 (
+			goto MENU
+		) else (
+			move /y "%temp%" "%~dp0" > nul 2>&1
+			start "Mantenimiento_Windows" "%~dpnx0"
+			exit
+			)
 	) else (
-	echo.
-	echo ----- Actualizando...
-	move /y "%temp%" "%~dp0" > nul 2>&1
-	exit
-	)
-) else (
 	goto MENU
-)
+	)
 )
 
 :MENU
@@ -106,7 +115,7 @@ COLOR 0F
 
 echo ----------------------------------------------------------------------------------
 
-echo. & echo [92m----- MENÚ PRINCIPAL - %ver%
+echo. & echo [92m----- MENÚ PRINCIPAL
 
 echo. [97m
 echo. & echo ----- 0 para SALIR.
@@ -509,162 +518,130 @@ echo. & echo ----- Pulse INTRO para volver al menú.
 
 echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 
-==========
+==================================================
+# \# Versión actual: 0.18.9.0
+# \# Cambios
+- **0.18.0.0**
+  ○ Relanzamiento a 0.XX.XX.XX
+  ○ Actualizaciones automáticas mediante repositorio en GitHub
+  ○ Eliminado registro de cambios oculto
+  ○ Directorio de archivos temporales cambiado
+- **0.18.1.0**
+  ○ El usuario podrá elegir si quiere actualizar
+- **0.18.2.0**
+  ○ Al actualizar, se cerrará automáticamente para evitar posibles errores
+  ○ Código para verificar la versión optimizado
+- **0.18.3.0**
+  ○ Cambios menores en la estructura
+- **0.18.4.0**
+  ○ Se redirigirá automáticamente al menú cuando no haya actualizaciones
+  ○ Soporte de caracteres con tilde y "ñ"
+- **0.18.5.0**
+  ○ Código optimizado y reestructurado
+- **0.18.6.0**
+  ○ Código reestructurado y adaptado a cambios de 0.18.4.0
+- **0.18.7.0**
+  ○ Aviso inicial actualizado y reestructurado
+- **0.18.8.0**
+  ○ Notas de versión añadidas (no accesibles desde la herramienta)
+- **0.18.9.0**
+  ○ Menú de actualizaciones actualizado y código optimizado
+# \# Errores
+- **0.18.4.0**
+  ○ Llamadas a PowerShell cambian la tipografía
+# \# Errores corregidos
+- **Corregido en GitHub**
+  ○ Versiones inferiores a 0.18.2.0 no se actualizan automáticamente
+  ○ Versiones inferiores a 0.18.6.0 pueden tener problemas para actualizarse
+- **0.18.2.1**
+  ○ Cierre inesperado al actualizarse a una nueva versión
+  ○ No se elimina archivo temporal generado
+- **0.18.3.1**
+  ○ Nueva versión disponible" en bucle
+- **0.18.6.1**
+  ○ Errores menores en la estructura
+- **0.18.7.0**
+  ○ Errores ortográficos
+- **0.18.8.0**
+  ○ Errores ortográficos
+- **0.18.8.1**
+  ○ Actualizar sin conexión a internet genera un bucle, dejando inservible la herramienta
+- **0.18.8.1**
+  ○ Actualizar sin conexión a internet genera un bucle. Se puede evitar denegando la actualización
+==================================================
+# \# Cambios
+- **1.17.0**
+  ○ Código optimizado y reestructurado`
+  ○ Nueva ruta de limpieza de archivos temporales
+  ○ Visibilidad mejorada
+  ○ Tamaño de ventana ajustado
+  ○ Aviso inicial actualizado
+- **Añadido en 1.17.1**
+  ○ Capacidad de habilitar/deshabilitar análisis automáticos de Windows Defender **AVANZADO**
+  ○ Redundancia añadida para prevenir ejecución inintencionada
+  ○ Código reestructurado
+- **Añadido en 1.17.2**
+  ○ Código optimizado
+- **Añadido en 1.17.3**
+  ○ Limpieza de archivos temporales mejorada y optimizada
+- **Añadido en 1.17.4**
+  ○ Código optimizado y reestructurado
+  ○ Tamaño de ventana reajustado
+- **Añadido en 1.17.5**
+  ○ Código optimizado y reestructurado
+# \# Errores
+- **1.17.0**
+  ○ 
+# \# Errores corregidos
+- **1.17.0**
+  ○ Error de redirección el cual provoca que se seleccione el disco local como objetivo de limpieza
+==================================================
+# \# Cambios
+- **1.16.0**
+  ○ Feedback de la herramienta
+  ○ Selector de hibernación
+  ○ Notificación por bug de Windows
+  ○ Lectura de error mejorada
+  ○ Función experimental
+# \# Errores
+- **1.16.0**
+  ○ Error de redirección el cual provoca que se seleccione el disco local como objetivo de limpieza
+# \# Errores corregidos
+- **1.16.0**
+  ○ 
+==================================================
+# \# 1.15 - AGREGADO PERMISO DE LIMPIEZA DE "C:\Program Files\WindowsApps"
 
-**Versión actual: 0.18.8.1**
+# \# 1.14 - ELIMINADO ACCESO A FUNCIONES OBSOLETAS
 
-**- Cambios -**
-	• **Añadido en 0.18.0.0**
-		· Relanzamiento de 1.XX.XX a 0.XX.XX.XX.
-		· Actualizaciones automáticas mediante repositorio en GitHub.
-		· Eliminado registro de cambios oculto.
-		· Directorio de archivos temporales cambiado.
-	• **Añadido en 0.18.1.0**
-		· El usuario podrá elegir si quiere actualizar.
-	• **Añadido en 0.18.2.0**
-		· Al actualizar, se cerrará automáticamente para evitar posibles errores.
-		· Código para verificar la versión optimizado.
-	• **Añadido en 0.18.3.0**
-		· Cambios menores en la estructura.
-	• **Añadido en 0.18.4.0**
-		· Se redirigirá automáticamente al menú cuando no haya actualizaciones.
-		· Soporte de caracteres con tilde y "ñ".
-	• **Añadido en 0.18.5.0**
-		· Código optimizado y reestructurado.
-	• **Añadido en 0.18.6.0**
-		· Código reestructurado y adaptado a cambios de 0.18.4.0.
-	• **Añadido en 0.18.7.0**
-		· Aviso inicial actualizado y reestructurado.
-	• **Añadido en 0.18.8.0**
-		· Notas de versión añadidas (no accesibles desde la herramienta).
-	
-**- Errores -**
-	• **Introducido en 0.18.4.0**
-		· Llamadas a PowerShell cambian la tipografía.
-	
-**- Errores corregidos -**
-	• **Corregido en GitHub**
-		· Versiones inferiores a 0.18.2.0 no se actualizan automáticamente.
-		· ~~Versiones inferiores a 0.18.6.0 pueden tener problemas para actualizarse.~~
-	• **Corregido en 0.18.2.1**
-		· ~~Cierre inesperado al actualizarse a una nueva versión.~~
-		· ~~No se elimina archivo temporal generado.~~
-	• **Corregido en 0.18.3.1**
-		· ~~"Nueva versión disponible" en bucle.~~
-	• **Corregido en 0.18.6.1**
-		· ~~Errores menores en la estructura.~~
-	• **Corregido en 0.18.7.0**
-		· ~~Errores ortográficos.~~
-	• **Corregido en 0.18.8.0**
-		· ~~Errores ortográficos.~~
-	• **Corregido en 0.18.8.1**
-		· Actualizar sin conexión a internet genera un bucle, dejando inservible la herramienta.
-	• **Corregido en 0.18.8.1**
-		· Actualizar sin conexión a internet genera un bucle. Se puede evitar denegando la actualización.
-		
-==========
+# \# 1.13 - AGREGADA OPCIÓN EN LIMPIEZA DE ARCHIVOS TEMPORALES Y CÓDIGO OPTIMIZADO
 
-**Versión 1.17.0**
+# \# 1.12 - LIMPIEZA DE ARCHIVOS TEMPORALES MEJORADA Y CÓDIGO OPTIMIZADO
 
-**- Cambios -**
-	• **Añadido en 1.17.0**
-		· Código optimizado y reestructurado.
-		· Nueva ruta de limpieza de archivos temporales.
-		· Visibilidad mejorada.
-		· Tamaño de ventana ajustado.
-		· Aviso inicial actualizado.
-	• **Añadido en 1.17.1**
-		· Capacidad de habilitar/deshabilitar análisis automáticos de Windows Defender. **AVANZADO**
-		· Redundancia añadida para prevenir ejecución inintencionada.
-		· Código reestructurado.
-	• **Añadido en 1.17.2**
-		· Código optimizado.
-	• **Añadido en 1.17.3**
-		· Limpieza de archivos temporales mejorada y optimizada.
-	• **Añadido en 1.17.4**
-		· Código optimizado y reestructurado.
-		· Tamaño de ventana reajustado.
-	• **Añadido en 1.17.5**
-		· Código optimizado y reestructurado.
-	
-**- Errores -**
-	• **Introducido en 1.17.0**
-		· 
-	
-**- Errores corregidos -**
-	**Corregido en 1.17.0**
-		· Error de redirección el cual provoca que se seleccione el disco local como objetivo de limpieza.
+# \# 1.11 - CAMBIOS EN CÓDIGO, ESTRUCTURA, TEXTO Y CÓDIGO OPTIMIZADO
 
-==========
+# \# 1.10 - AGREGADO CÓDIGO DE COLORES Y CÓDIGO OPTIMIZADO
 
-**Versión 1.16.0**
+# \# 1.9 - CAMBIOS EN CÓDIGO, ESTRUCTURA, MENÚ Y TEXTO
 
-**- Cambios -**
-	• **Añadido en 1.16.0**
-		· Feedback de la herramienta.
-		· Selector de hibernación.
-		· Notificación por bug de Windows.
-		· Lectura de error mejorada.
-		· Función experimental.
-	
-**- Errores -**
-	• **Introducido en 1.16.0**
-		· Error de redirección el cual provoca que se seleccione el disco local como objetivo de limpieza.
-	
-**- Errores corregidos -**
-	**Corregido en 1.16.0**
-		· 
+# \# 1.8 - CAMBIOS EN LA DETECCIÓN DE COMANDOS
 
-==========
+# \# 1.7 - CAMBIOS EN EL AVISO INICIAL Y SU CÓDIGO
 
-**Versión 1.1.0**
+# \# 1.6 - CREACIÓN DEL APARTADO "VERSIÓN" Y CAMBIOS MENORES
 
-**- Cambios -**
-	• **Añadido en 1.1.0**
-		· 
-	
-**- Errores -**
-	• **Introducido en 1.1.0**
-		· 
-	
-**- Errores corregidos -**
-	**Corregido en 1.1.0**
-		· 
+# \# 1.5 - MEJORA EN COMANDOS DE ARCHIVOS TEMPORALES
 
-==========
+# \# 1.4 - OPTIMIZACIÓN DEL CÓDIGO Y CAMBIOS EN LA INTERFAZ
 
-1.15 - AGREGADO PERMISO DE LIMPIEZA DE "C:\Program Files\WindowsApps".
+# \# 1.3 - AGREGADOS COMANDOS INDEPENDIENTES PARA MANTENIMIENTO Y LIMPIEZA
 
-1.14 - ELIMINADO ACCESO A FUNCIONES OBSOLETAS.
+# \# 1.2 - CAMBIO EN COMANDO DE REDIRECCIÓN
 
-1.13 - AGREGADA OPCIÓN EN LIMPIEZA DE ARCHIVOS TEMPORALES. CÓDIGO OPTIMIZADO.
+# \# 1.1 - CAMBIO EN ESTRUCTURA DEL MENÚ
 
-1.12 - LIMPIEZA DE ARCHIVOS TEMPORALES MEJORADA. CÓDIGO OPTIMIZADO.
+# \# 1.0 - UNIFICACIÓN
 
-1.11 - CAMBIOS EN CÓDIGO, ESTRUCTURA Y TEXTO. CÓDIGO OPTIMIZADO.
+# \# FASE 2 - CREACIÓN DE MENU
 
-1.10 - AGREGADO CÓDIGO DE COLORES. CÓDIGO OPTIMIZADO.
-
-1.9 - CAMBIOS EN CÓDIGO, ESTRUCTURA, MENÓ Y TEXTO.
-
-1.8 - CAMBIOS EN LA DETECCIÓN DE COMANDOS.
-
-1.7 - CAMBIOS EN EL AVISO INICIAL Y SU CODIGO.
-
-1.6 - CREACIÓN DEL APARTADO "VERSIÓN" Y CAMBIOS MENORES.
-
-1.5 - MEJORA EN COMANDOS DE ARCHIVOS TEMPORALES.
-
-1.4 - OPTIMIZACIÓN DEL CÓDIGO Y CAMBIOS EN LA INTERFAZ.
-
-1.3 - AGREGADOS COMANDOS INDEPENDIENTES PARA MANTENIMIENTO Y LIMPIEZA.
-
-1.2 - CAMBIO EN COMANDO DE REDIRECCIÓN.
-
-1.1 - CAMBIO EN ESTRUCTURA DEL MENÚ.
-
-1.0 - UNIFICACIÓN.
-
-FASE 2 - CREACIÓN DE MENU.
-
-FASE 1 - COMANDOS INDEPENDIENTES.
+# \# FASE 1 - COMANDOS INDEPENDIENTES
