@@ -1,13 +1,13 @@
 @echo Off
 
-chcp 65001
-
-set ver=0.18.9.0
-set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
-set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
-
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
+
+chcp 65001
+
+set ver=0.18.9.0B
+set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
+set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto AVISO
@@ -82,27 +82,28 @@ if errorlevel 1 (
 	echo [93m----- Error al conectarse a internet.
 	timeout 5 >nul
 	goto MENU
-) else (
-    findstr /C:"set ver=" %temp% > %temp%.new
-    set /p ver_new=<"%temp%.new"
-    for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
-    del "%temp%.new"
-    if !ver_new! gtr !ver! (
-		echo.
-		echo [93m----- Nueva versión disponible: !ver_new!
-		echo.
-		echo [91m----- Al actualizar, la herramienta se reiniciará.
-		echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-		if errorlevel 2 (
-			goto MENU
-		) else (
-			move /y "%temp%" "%~dp0" > nul 2>&1
-			start "Mantenimiento_Windows" "%~dpnx0"
-			exit
-			)
-	) else (
-	goto MENU
+)
+
+findstr /C:"set ver=" %temp% > %temp%.new
+
+set /p ver_new=<"%temp%.new"
+
+for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
+
+del "%temp%.new"
+
+if %ver% neq %ver_new% (
+	echo.
+	echo [93m----- Nueva versión disponible: %ver_new%
+	echo.
+	echo [91m----- Al actualizar, la herramienta se reiniciará.
+	echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
+	if errorlevel 2 (
+		goto MENU
 	)
+	move /y "%temp%" "%~dp0" > nul 2>&1
+	start "" "%~dpnx0"
+	exit
 )
 
 :MENU
