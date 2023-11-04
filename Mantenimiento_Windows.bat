@@ -2,9 +2,10 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.9.0C
+set ver=0.18.9.0D
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
+title %ver%
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto AVISO
 MODE CON: COLS=82 LINES=11
