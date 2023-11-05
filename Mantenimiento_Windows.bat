@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.9.0E
+set ver=0.18.9.0F
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -21,19 +21,19 @@ MODE CON: COLS=82 LINES=37
 CLS
 echo [97m----------------------------------------------------------------------------------
 echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
-echo. & echo ----- [7mPUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA DEL RATÓN.[0m
-echo. & echo [93m----- LEA ATENTAMENTE TODO LO QUE REPORTE LA HERRAMIENTA.
-echo. & echo ----- PRESTE ATENCIÓN A LAS RECOMENDACIONES.
-echo. & echo ----- NO USE LA HERRAMIENTA SI HAY ACTUALIZACIONES EN CURSO.
-echo. & echo ----- ESPERE A QUE SE COMPLETE LA OPERACIÓN ANTES DE CERRAR LA HERRAMIENTA.
-echo. & echo ----- ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS EN COMPLETARSE.
-echo. & echo ----- SE RECOMIENDA TENER WINDOWS COMPLETAMENTE ACTUALIZADO.
-echo. & echo ----- SE RECOMIENDA CERRAR TODOS LOS PROGRAMAS ANTES DE EJECUTAR LA HERRAMIENTA.
-echo. & echo ----- SE RECOMIENDA DESACTIVAR EL ANTIVIRUS PARA MEJORAR LA VELOCIDAD DE TRABAJO.
+echo. & echo [92m----- PUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA DEL RATÓN[0m
+echo. & echo [93m----- LEA ATENTAMENTE TODO LO QUE REPORTE LA HERRAMIENTA
+echo. & echo ----- PRESTE ATENCIÓN A LAS RECOMENDACIONES
+echo. & echo ----- NO USE LA HERRAMIENTA SI HAY ACTUALIZACIONES EN CURSO
+echo. & echo ----- ESPERE A QUE SE COMPLETE LA OPERACIÓN ANTES DE CERRAR LA HERRAMIENTA
+echo. & echo ----- ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS EN COMPLETARSE
+echo. & echo ----- SE RECOMIENDA TENER WINDOWS COMPLETAMENTE ACTUALIZADO
+echo. & echo ----- SE RECOMIENDA CERRAR TODOS LOS PROGRAMAS ANTES DE EJECUTAR LA HERRAMIENTA
+echo. & echo ----- SE RECOMIENDA DESACTIVAR EL ANTIVIRUS PARA MEJORAR LA VELOCIDAD DE TRABAJO
 echo. & echo ----- NO ME HAGO RESPONSABLE DEL MAL USO DE LA HERRAMIENTA, PÉRDIDA DE DATOS Y
-		echo       PROBLEMAS CAUSADOS AL SOFTWARE O HARDWARE.[0m
+		echo       PROBLEMAS CAUSADOS AL SOFTWARE O HARDWARE[0m
 echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
-echo. & echo [97m----- Pulse INTRO si ha leído, entiende y acepta todo lo anterior.
+echo. & echo [97m----- Pulse INTRO si ha leído, entiende y acepta todo lo anterior
 echo. & echo ----------------------------------------------------------------------------------[0m& pause >nul & CLS
 :UPDATE
 echo ----------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ echo. & echo [94m----- Buscando actualizaciones...
 curl -o %temp% %url% -s
 if errorlevel 1 (
 	echo.
-	echo [93m----- Error al conectarse a internet.
+	echo [93m----- Error al conectarse a internet
 	timeout 5 >nul
 	goto MENU
 )
@@ -52,7 +52,7 @@ for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
 del "%temp%.new"
 if %ver% neq %ver_new% (
 	echo. & echo [93m----- Nueva versión disponible: %ver_new%
-	echo. & echo [91m----- Al actualizar, la herramienta se reiniciará.
+	echo. & echo [91m----- Al actualizar, la herramienta se reiniciará
 	echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
 	if errorlevel 2 (
 		goto MENU
@@ -69,15 +69,15 @@ echo ---------------------------------------------------------------------------
 echo. & echo [92m----- MENÚ PRINCIPAL
 	echo. [97m
 	echo. & echo ----- 0 para SALIR.
-	echo. & echo ----- 1 para MANTENIMIENTO COMPLETO.
-	echo. & echo ----- 2 para VERIFICAR ESTADO DE WINDOWS.
-	echo. & echo ----- 3 para LIMPIEZA DE ARCHIVOS TEMPORALES.
-	echo. & echo ----- 4 para COMPROBACIÓN Y REPARACIÓN DE DISCOS.
-	echo. & echo ----- 5 para ACTIVAR/DESACTIVAR HIBERNACIÓN.
-	echo. & echo ----- 6 para REESTABLECIMIENTO DE RED.
-	echo. & echo ----- 7 para ANÁLISIS DE MEMORIA.
-	echo. & echo ----- 8 para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER. [91m[AVANZADO]
-	echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps". [91m[AVANZADO]
+	echo. & echo ----- 1 para MANTENIMIENTO COMPLETO
+	echo. & echo ----- 2 para VERIFICAR ESTADO DE WINDOWS
+	echo. & echo ----- 3 para LIMPIEZA DE ARCHIVOS TEMPORALES
+	echo. & echo ----- 4 para COMPROBACIÓN Y REPARACIÓN DE DISCOS
+	echo. & echo ----- 5 para ACTIVAR/DESACTIVAR HIBERNACIÓN
+	echo. & echo ----- 6 para REESTABLECIMIENTO DE RED
+	echo. & echo ----- 7 para ANÁLISIS DE MEMORIA
+	echo. & echo ----- 8 para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER [91m[AVANZADO]
+	echo. & echo [97m----- 9 para PERMISOS LIMPIEZA "WindowsApps" [91m[AVANZADO]
 			echo "C:\Program Files\WindowsApps" >nul
 echo.
 echo.
@@ -134,15 +134,15 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 	echo ----- Paso 11 de 12...
 		PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 	echo.
-	echo [93m----- ATENCIÓN: En la fase final del siguiente paso se ejecutarán dos ventanas.
-	echo ----- Un bug de Windows evita su cierre automático al finalizar.
+	echo [93m----- ATENCIÓN: En la fase final del siguiente paso se ejecutarán dos ventanas
+	echo ----- Un bug de Windows evita su cierre automático al finalizar
 	echo ----- Para completar el paso es necesario que el usuario actualice su estado
-	echo ----- pasando el ratón por encima de dichas ventanas.
-	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo.[0m
+	echo ----- pasando el ratón por encima de dichas ventanas
+	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo[0m
 	echo.
 	echo [94m----- Paso 12 de 12...
 		cleanmgr /verylowdisk /sagerun /f
-			echo. & echo ----- Puede liberar mas espacio desactivando la hibernación.[0m
+			echo. & echo ----- Puede liberar mas espacio desactivando la hibernación[0m
 				goto COMPLETADO.REINICIO
 :ESTADO
 CLS
@@ -188,11 +188,11 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	echo ----- Paso 9 de 10...
 		PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 	echo.
-	echo [93m----- ATENCION: En la fase final del siguiente paso se ejecutarán dos ventanas.
-	echo ----- Un bug de Windows evita su cierre automático al finalizar.
+	echo [93m----- ATENCION: En la fase final del siguiente paso se ejecutarán dos ventanas
+	echo ----- Un bug de Windows evita su cierre automático al finalizar
 	echo ----- Para completar el paso es necesario que el usuario actualice su estado
-	echo ----- pasando el ratón por encima de dichas ventanas.
-	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo.[0m
+	echo ----- pasando el ratón por encima de dichas ventanas
+	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo[0m
 	echo.
 	echo [94m----- Paso 10 de 10...
 		cleanmgr /verylowdisk /sagerun /f
@@ -207,10 +207,10 @@ echo. & echo ----- Comprobando discos... & COLOR 09
 		PowerShell Write-Host -Fore Red ----- Error detectado. Ejecutando reparaciones...
 			chkdsk /r /scan /perf >nul
 			echo.
-			echo ----- Reinicie la herramienta y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS".
+			echo ----- Reinicie la herramienta y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS"
 			echo.
 			echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento.
+			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento
 			echo.
 			echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU)
 				goto COMPLETADO
@@ -223,25 +223,25 @@ REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled >nul
 if errorlevel == 0 goto HIBN
 	echo.
 	echo.
-	echo [93m----- Estado actual: Activado.[0m & echo [94m
-	echo. & echo ----- 1 para Desactivar.
-	echo. & echo ----- 2 para Volver al menú.
+	echo [93m----- Estado actual: Activado[0m & echo [94m
+	echo. & echo ----- 1 para Desactivar
+	echo. & echo ----- 2 para Volver al menú
 	echo. & echo.
 	set /P HIB=----- Ejecutar... & echo [0m
 		if /I %HIB% == 1 (powercfg.exe /hibernate off > nul 2>&1 & echo
-		echo. & echo ----- Hibernación desactivada. & goto COMPLETADO)
+		echo. & echo ----- Hibernación desactivada & goto COMPLETADO)
 		if /I %HIB% == 2 goto MENU
 		goto HIBERNAR
 :HIBN
 	echo.
 	echo.
-	echo [93m----- Estado actual: Desactivado.[0m & echo [94m		
-	echo. & echo ----- 1 para Activar.
-	echo. & echo ----- 2 para Volver al menú.
+	echo [93m----- Estado actual: Desactivado[0m & echo [94m		
+	echo. & echo ----- 1 para Activar
+	echo. & echo ----- 2 para Volver al menú
 	echo. & echo.	
 	set /P HIB=----- Ejecutar... & echo [0m
 		if /I %HIB% == 1 (powercfg.exe /hibernate on > nul 2>&1 & echo.
-		echo. & echo ----- Hibernación activada. & goto COMPLETADO)
+		echo. & echo ----- Hibernación activada & goto COMPLETADO)
 		if /I %HIB% == 2 goto MENU
 		goto HIBERNAR
 :RED
@@ -260,16 +260,16 @@ CLS
 echo ----------------------------------------------------------------------------------
 echo. & echo ----- Ejecutando programandor de análisis... & COLOR 09
 	mdsched.exe
-		echo. & echo [93m----- La duracion del análisis puede tardar varias horas.[0m
+		echo. & echo [93m----- La duracion del análisis puede tardar varias horas[0m
 		echo. & echo [97m----- Pulse INTRO para continuar[0m & pause >nul
 			goto COMPLETADO.REINICIO
 :DEFENDER
 CLS
 echo ----------------------------------------------------------------------------------
-echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCIÓN PUEDE COMPROMETER SU SISTEMA.[0m
+echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCIÓN PUEDE COMPROMETER SU SISTEMA[0m
 echo.
-	echo. & echo [97m----- M para MENU.
-	echo. & echo ----- CONFIRMAR para EJECUTAR COMANDO.
+	echo. & echo [97m----- M para Volver al menú
+	echo. & echo ----- CONFIRMAR para Continuar
 	echo.
 	echo.
 		SET /P WA=----- Ejecutar... [0m 
@@ -285,36 +285,36 @@ echo. & echo ----- Obteniendo ajustes de análisis automático... & COLOR 09
 	find "Deshabilitado" C:\Windows\Temp\WDSSTemp.txt >nul && goto DEF.CHECK
 		echo.
 		echo.
-		echo [93m----- Estado actual: Activado.[0m & echo [94m
-		echo. & echo ----- 1 para Desactivar.
-		echo. & echo ----- 2 para Volver al menú.
+		echo [93m----- Estado actual: Activado[0m & echo [94m
+		echo. & echo ----- 1 para Desactivar
+		echo. & echo ----- 2 para Volver al menú
 		echo. & echo.
 			set /P DEF=----- Ejecutar... & echo [0m
 			if /I %DEF% == 1 (schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-			echo. & echo ----- Análisis automático desactivado.
-			del C:\Windows\Temp\WDSSTemp.txt 2>nul & goto COMPLETADO)
+				echo. & echo ----- Análisis automático desactivado
+				del C:\Windows\Temp\WDSSTemp.txt 2>nul & goto COMPLETADO)
 			if /I %DEF% == 2 goto MENU
 				goto DEFENDER.CONFIRM
 :DEF.CHECK
-echo.
-echo.		
-echo [93m----- Estado actual: Desactivado.[0m & echo [94m		
-echo. & echo ----- 1 para Activar.
-echo. & echo ----- 2 para Volver al menú.
-echo. & echo.	
-set /P DEF=----- Ejecutar... & echo [0m
-	if /I %DEF% == 1 (schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-	echo. & echo ----- Análisis automático desactivado.
-	del C:\Windows\Temp\WDSSTemp.txt 2>nul & goto COMPLETADO)
-	if /I %DEF% == 2 goto MENU
-	goto DEFENDER.CONFIRM
+		echo.
+		echo.		
+		echo [93m----- Estado actual: Desactivado[0m & echo [94m		
+		echo. & echo ----- 1 para Activar
+		echo. & echo ----- 2 para Volver al menú
+		echo. & echo.	
+			set /P DEF=----- Ejecutar... & echo [0m
+			if /I %DEF% == 1 (schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
+				echo. & echo ----- Análisis automático desactivado.
+				del C:\Windows\Temp\WDSSTemp.txt 2>nul & goto COMPLETADO)
+			if /I %DEF% == 2 goto MENU
+				goto DEFENDER.CONFIRM
 :WINDOWSAPPS
 CLS
 echo [97m----------------------------------------------------------------------------------
 echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCION PUEDE COMPROMETER SU SISTEMA.[0m
 echo.
-	echo. & echo [97m----- M para MENU.
-	echo. & echo ----- CONFIRMAR para EJECUTAR COMANDO.
+	echo. & echo [97m----- M para Volver al menú
+	echo. & echo ----- CONFIRMAR para Continuar
 	echo.
 	echo.
 		SET /P WA=----- Ejecutar... [0m
@@ -331,13 +331,13 @@ echo. & echo ----- Otorgando permisos en C:\Program Files\WindowsApps... & COLOR
 		goto COMPLETADO
 :COMPLETADO
 echo.
-echo. & echo ----- Completado. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menú.
+echo. & echo ----- Completado & COLOR 0A
+echo. & echo ----- Pulse INTRO para volver al menú
 echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 :COMPLETADO.REINICIO
 echo.
-echo. & echo ----- Completado. Se recomienda reiniciar. & COLOR 0A
-echo. & echo ----- Pulse INTRO para volver al menú.
+echo. & echo ----- Completado (Se recomienda reiniciar) & COLOR 0A
+echo. & echo ----- Pulse INTRO para volver al menú
 echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 ==================================================
 # \# Versión actual: 0.18.9.0
