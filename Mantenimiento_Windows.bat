@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.9.0F
+set ver=0.18.9.0G
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -20,7 +20,7 @@ echo. & echo -------------------------------------------------------------------
 MODE CON: COLS=82 LINES=37
 CLS
 echo [97m----------------------------------------------------------------------------------
-echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
+echo. & echo [41m----------------------------IMPORTANTE, LEA ATENTAMENTE---------------------------[0m
 echo. & echo [92m----- PUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA DEL RATÓN[0m
 echo. & echo [93m----- LEA ATENTAMENTE TODO LO QUE REPORTE LA HERRAMIENTA
 echo. & echo ----- PRESTE ATENCIÓN A LAS RECOMENDACIONES
@@ -32,7 +32,6 @@ echo. & echo ----- SE RECOMIENDA CERRAR TODOS LOS PROGRAMAS ANTES DE EJECUTAR LA
 echo. & echo ----- SE RECOMIENDA DESACTIVAR EL ANTIVIRUS PARA MEJORAR LA VELOCIDAD DE TRABAJO
 echo. & echo ----- NO ME HAGO RESPONSABLE DEL MAL USO DE LA HERRAMIENTA, PÉRDIDA DE DATOS Y
 		echo       PROBLEMAS CAUSADOS AL SOFTWARE O HARDWARE[0m
-echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
 echo. & echo [97m----- Pulse INTRO si ha leído, entiende y acepta todo lo anterior
 echo. & echo ----------------------------------------------------------------------------------[0m& pause >nul & CLS
 :UPDATE
