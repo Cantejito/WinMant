@@ -2,10 +2,10 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.9.0D
+set ver=0.18.9.0E
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
-title %ver%
+title Versión %ver%
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto AVISO
 MODE CON: COLS=82 LINES=11
@@ -20,7 +20,6 @@ echo. & echo -------------------------------------------------------------------
 MODE CON: COLS=82 LINES=37
 CLS
 echo [97m----------------------------------------------------------------------------------
-echo. & echo [92m----- Versión %ver%[0m
 echo. & echo [41m--------------------------¡IMPORTANTE! ¡LEA ATENTAMENTE!--------------------------[0m
 echo. & echo ----- [7mPUEDE CAMBIAR LA ESCALA MANTENIENDO LA TECLA CTRL + RUEDA DEL RATÓN.[0m
 echo. & echo [93m----- LEA ATENTAMENTE TODO LO QUE REPORTE LA HERRAMIENTA.
