@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.10.0A
+set ver=0.18.10.0B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -38,28 +38,28 @@ echo. & echo -------------------------------------------------------------------
 echo ----------------------------------------------------------------------------------
 echo. & echo [92m----- Versión actual: %ver%
 echo. & echo [94m----- Buscando actualizaciones...
-curl -o %temp% %url% -s
-if errorlevel 1 (
-	echo.
-	echo [93m----- Error al conectarse a internet
-	timeout 5 >nul
-	goto MENU
-)
-findstr /C:"set ver=" %temp% > %temp%.new
-set /p ver_new=<"%temp%.new"
-for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
-del "%temp%.new"
-if %ver% neq %ver_new% (
-	echo. & echo [93m----- Nueva versión disponible: %ver_new%
-	echo. & echo [91m----- Al actualizar, la herramienta se reiniciará
-	echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
-	if errorlevel 2 (
+	curl -o %temp% %url% -s
+	if errorlevel 1 (
+		echo.
+		echo [93m----- Error al conectarse a internet
+		timeout 5 >nul
 		goto MENU
 	)
-	move /y "%temp%" "%~dp0" > nul 2>&1
-	start "" "%~dpnx0"
-	exit
-)
+	findstr /C:"set ver=" %temp% > %temp%.new
+	set /p ver_new=<"%temp%.new"
+	for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
+	del "%temp%.new"
+	if %ver% neq %ver_new% (
+		echo. & echo [93m----- Nueva versión disponible: %ver_new%
+		echo. & echo [91m----- Al actualizar, la herramienta se reiniciará
+		echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
+		if errorlevel 2 (
+			goto MENU
+		)
+		move /y "%temp%" "%~dp0" > nul 2>&1
+		start "" "%~dpnx0"
+		exit
+	)
 :MENU
 DEL %temp%
 CLS
@@ -155,7 +155,7 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 	echo.
 	set /a "disk_diff=(disk_after - disk_before)"
 	echo.
-	echo ----- %disk_diff%GB liberados (puede liberar mas espacio desactivando la hibernación)
+	echo ----- Aproximadamente %disk_diff%GB liberados (libera más desactivando la hibernación)
 			goto COMPLETADO.REINICIO
 :ESTADO
 CLS
@@ -223,7 +223,7 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	echo.
 	set /a "disk_diff=(disk_after - disk_before)"
 	echo.
-	echo ----- %disk_diff%GB liberados (puede liberar mas espacio desactivando la hibernación)
+	echo ----- Aproximadamente %disk_diff%GB liberados (libera más desactivando la hibernación)
 			goto COMPLETADO.REINICIO
 :DISCOS
 CLS
@@ -246,19 +246,19 @@ CLS
 echo ----------------------------------------------------------------------------------
 echo.
 echo ----- Obteniendo ajustes de hibernación... & COLOR 09
-REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled >nul 2>&1
-if errorlevel == 0 goto HIBN
-	echo.
-	echo.
-	echo [93m----- Estado actual: Activado[0m & echo [94m
-	echo. & echo ----- 1 para Desactivar
-	echo. & echo ----- 2 para Volver al menú
-	echo. & echo.
-	set /P HIB=----- Ejecutar... & echo [0m
-		if /I %HIB% == 1 (powercfg.exe /hibernate off > nul 2>&1 & echo
-		echo. & echo ----- Hibernación desactivada & goto COMPLETADO)
-		if /I %HIB% == 2 goto MENU
-		goto HIBERNAR
+	REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled >nul 2>&1
+	if errorlevel == 0 goto HIBN
+		echo.
+		echo.
+		echo [93m----- Estado actual: Activado[0m & echo [94m
+		echo. & echo ----- 1 para Desactivar
+		echo. & echo ----- 2 para Volver al menú
+		echo. & echo.
+		set /P HIB=----- Ejecutar... & echo [0m
+			if /I %HIB% == 1 (powercfg.exe /hibernate off > nul 2>&1 & echo.
+			echo. & echo ----- Hibernación desactivada & goto COMPLETADO)
+			if /I %HIB% == 2 goto MENU
+				goto HIBERNAR
 :HIBN
 	echo.
 	echo.
@@ -270,7 +270,7 @@ if errorlevel == 0 goto HIBN
 		if /I %HIB% == 1 (powercfg.exe /hibernate on > nul 2>&1 & echo.
 		echo. & echo ----- Hibernación activada & goto COMPLETADO)
 		if /I %HIB% == 2 goto MENU
-		goto HIBERNAR
+			goto HIBERNAR
 :RED
 CLS
 echo ----------------------------------------------------------------------------------
