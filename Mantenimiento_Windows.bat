@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.9.0H
+set ver=0.18.10.0A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -114,6 +114,11 @@ echo. & echo ----- Verificando estado de Windows... & color 09 & echo.
 	echo ----- Paso 2 de 12...
 	SFC /scannow >nul
 echo. & echo ----- Limpiando archivos temporales... & echo.
+	chcp 437 >nul 2>& 1
+		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
+			set "disk_before=%%a"
+		)
+		chcp 65001 >nul 2>& 1
 	echo ----- Paso 3 de 12...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
 	echo ----- Paso 4 de 12...
@@ -131,18 +136,27 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 	echo ----- Paso 10 de 12...
 		(cd C:\Windows\servicing\LCU && rd . /s /q) > nul 2>&1
 	echo ----- Paso 11 de 12...
-		PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
-	echo.
-	echo [93m----- ATENCIÓN: En la fase final del siguiente paso se ejecutarán dos ventanas
-	echo ----- Un bug de Windows evita su cierre automático al finalizar
-	echo ----- Para completar el paso es necesario que el usuario actualice su estado
-	echo ----- pasando el ratón por encima de dichas ventanas
-	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo[0m
-	echo.
-	echo [94m----- Paso 12 de 12...
+		chcp 437 >nul 2>& 1
+			PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+				chcp 65001 >nul 2>& 1
+					echo.
+					echo [93m----- ATENCIÓN: En la fase final del siguiente paso se ejecutarán dos ventanas
+					echo ----- Un bug de Windows evita su cierre automático al finalizar
+					echo ----- Para completar el paso, mueve el ratón por encima de dichas ventanas
+					echo ----- Si no se cierran, espere un minuto e intentelo de nuevo[0m
+					echo.
+	echo ----- Paso 12 de 12... & COLOR 09
 		cleanmgr /verylowdisk /sagerun /f
-			echo. & echo ----- Puede liberar mas espacio desactivando la hibernación[0m
-				goto COMPLETADO.REINICIO
+	chcp 437 >nul 2>& 1
+		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
+			set "disk_after=%%a"
+		)
+	chcp 65001 >nul 2>& 1
+	echo.
+	set /a "disk_diff=(disk_after - disk_before)"
+	echo.
+	echo ----- %disk_diff%GB liberados (puede liberar mas espacio desactivando la hibernación)
+			goto COMPLETADO.REINICIO
 :ESTADO
 CLS
 echo ----------------------------------------------------------------------------------
@@ -168,6 +182,11 @@ CLS
 echo ----------------------------------------------------------------------------------
 echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	echo.
+	chcp 437 >nul 2>& 1
+		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
+			set "disk_before=%%a"
+		)
+		chcp 65001 >nul 2>& 1
 	echo ----- Paso 1 de 10...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
 	echo ----- Paso 2 de 10...
@@ -178,25 +197,34 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 		(cd C:\Windows\Prefetch && rd . /s /q) > nul 2>&1
 	echo ----- Paso 5 de 10...
 		(cd C:\Windows\Temp && rd . /s /q) > nul 2>&1
-	echo ----- Paso 4 de 10...
+	echo ----- Paso 6 de 10...
 		(cd C:\Windows\SoftwareDistribution\Download && rd . /s /q) > nul 2>&1
 	echo ----- Paso 7 de 10...
 		(cd C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp && rd . /s /q) > nul 2>&1
 	echo ----- Paso 8 de 10...
 		(cd C:\Windows\servicing\LCU && rd . /s /q) > nul 2>&1
 	echo ----- Paso 9 de 10...
-		PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
-	echo.
-	echo [93m----- ATENCION: En la fase final del siguiente paso se ejecutarán dos ventanas
-	echo ----- Un bug de Windows evita su cierre automático al finalizar
-	echo ----- Para completar el paso es necesario que el usuario actualice su estado
-	echo ----- pasando el ratón por encima de dichas ventanas
-	echo ----- Si pasa el ratón y no se cierran, espere un minuto e intentelo de nuevo[0m
-	echo.
-	echo [94m----- Paso 10 de 10...
+		chcp 437 >nul 2>& 1
+			PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+			chcp 65001 >nul 2>& 1
+				echo.
+				echo [93m----- ATENCIÓN: En la fase final del siguiente paso se ejecutarán dos ventanas
+				echo ----- Un bug de Windows evita su cierre automático al finalizar
+				echo ----- Para completar el paso, mueve el ratón por encima de dichas ventanas
+				echo ----- Si no se cierran automáticamente, espere un minuto e intentelo de nuevo[0m
+				echo.
+	echo ----- Paso 10 de 10... & COLOR 09
 		cleanmgr /verylowdisk /sagerun /f
-			echo. & echo ----- Puede liberar mas espacio desactivando la hibernación[0m
-				goto COMPLETADO.REINICIO
+	chcp 437 >nul 2>& 1
+		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
+			set "disk_after=%%a"
+		)
+	chcp 65001 >nul 2>& 1
+	echo.
+	set /a "disk_diff=(disk_after - disk_before)"
+	echo.
+	echo ----- %disk_diff%GB liberados (puede liberar mas espacio desactivando la hibernación)
+			goto COMPLETADO.REINICIO
 :DISCOS
 CLS
 echo ----------------------------------------------------------------------------------
@@ -335,6 +363,6 @@ echo. & echo ----- Pulse INTRO para volver al menú
 echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 :COMPLETADO.REINICIO
 echo.
-echo. & echo ----- Completado (Se recomienda reiniciar) & COLOR 0A
+echo. & echo ----- Completado (se recomienda reiniciar) & COLOR 0A
 echo. & echo ----- Pulse INTRO para volver al menú
 echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
