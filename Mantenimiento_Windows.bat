@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.10.2A
+set ver=0.18.10.2B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -168,6 +168,7 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 			set "disk_before=%%a"
 		)
 			chcp 65001 >nul 2>& 1
+			
 	echo ----- Paso 1 de 10
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
 		
@@ -205,6 +206,7 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 					
 	echo ----- Paso 10 de 10 & COLOR 09
 		cleanmgr /verylowdisk /sagerun /f
+		
 	chcp 437 >nul 2>& 1
 		for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
 			set "disk_after=%%a"
@@ -214,7 +216,7 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	echo.
 	set /a "disk_diff=(disk_after - disk_before)"
 	
-	echo.
+	echo. & echo.
 	echo ----- Aproximadamente %disk_diff%GB liberados (libera más desactivando la hibernación)
 			goto COMPLETADO.REINICIO
 			
