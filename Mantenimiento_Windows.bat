@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.10.0B
+set ver=0.18.10.0C
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -115,9 +115,9 @@ echo. & echo ----- Verificando estado de Windows... & color 09 & echo.
 	SFC /scannow >nul
 echo. & echo ----- Limpiando archivos temporales... & echo.
 	chcp 437 >nul 2>& 1
-		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
-			set "disk_before=%%a"
-		)
+	for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
+		set "disk_before=%%a"
+	)
 		chcp 65001 >nul 2>& 1
 	echo ----- Paso 3 de 12...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
@@ -148,9 +148,9 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 	echo ----- Paso 12 de 12... & COLOR 09
 		cleanmgr /verylowdisk /sagerun /f
 	chcp 437 >nul 2>& 1
-		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
-			set "disk_after=%%a"
-		)
+	for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
+		set "disk_after=%%a"
+	)
 	chcp 65001 >nul 2>& 1
 	echo.
 	set /a "disk_diff=(disk_after - disk_before)"
@@ -183,9 +183,9 @@ echo ---------------------------------------------------------------------------
 echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	echo.
 	chcp 437 >nul 2>& 1
-		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
-			set "disk_before=%%a"
-		)
+	for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
+		set "disk_before=%%a"
+	)
 		chcp 65001 >nul 2>& 1
 	echo ----- Paso 1 de 10...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
@@ -216,9 +216,9 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	echo ----- Paso 10 de 10... & COLOR 09
 		cleanmgr /verylowdisk /sagerun /f
 	chcp 437 >nul 2>& 1
-		for /f "tokens=*" %%a in ('powershell -command "& {Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 3 } | ForEach-Object { [math]::Round($_.FreeSpace / 1GB, 2) }}"') do (
-			set "disk_after=%%a"
-		)
+	for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
+		set "disk_after=%%a"
+	)
 	chcp 65001 >nul 2>& 1
 	echo.
 	set /a "disk_diff=(disk_after - disk_before)"
