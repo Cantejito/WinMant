@@ -2,9 +2,9 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.10.2B
+set ver=0.18.10.3A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
-set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
+set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto AVISO
@@ -44,7 +44,7 @@ echo. & echo [92m----- Versión actual: %ver%
 
 echo. & echo [94m----- Buscando actualizaciones...
 
-	curl -o %temp% %url% -s
+	curl -o %tempmant% %url% -s
 		if errorlevel 1 (
 			echo.
 			echo [93m----- Error al conectarse a internet
@@ -52,25 +52,25 @@ echo. & echo [94m----- Buscando actualizaciones...
 					goto MENU
 		)
 	
-	findstr /C:"set ver=" %temp% > %temp%.new
-		set /p ver_new=<"%temp%.new"
+	findstr /C:"set ver=" %tempmant% > %tempmant%.new
+		set /p ver_new=<"%tempmant%.new"
 			for /f "tokens=2 delims==" %%A in ("!ver_new!") do set "ver_new=%%A"
-				del "%temp%.new"
+				del "%tempmant%.new"
 				
 	if %ver% neq %ver_new% (
 		echo. & echo [93m----- Nueva versión disponible: %ver_new%
 		echo. & echo [91m----- Al actualizar, la herramienta se reiniciará
 		echo [97m & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
 			if errorlevel 2 (
-				goto MENU
+				del %tempmant%
+					goto MENU
 			)
-			move /y "%temp%" "%~dp0" > nul 2>&1
+			move /y "%tempmant%" "%~dp0" > nul 2>&1
 				start "" "%~dpnx0"
 					exit
 	)
 	
 :MENU
-DEL %temp%
 CLS
 COLOR 0F
 echo ----------------------------------------------------------------------------------
@@ -170,28 +170,28 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 			chcp 65001 >nul 2>& 1
 			
 	echo ----- Paso 1 de 10
-		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase > nul 2>&1
 		
 	echo ----- Paso 2 de 10
-		(cd %temp% && rd . /s /q) > nul 2>&1
+		cd %temp% & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 3 de 10
-		(cd C:\Temp && rd . /s /q) > nul 2>&1
+		cd C:\Temp & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 4 de 10
-		(cd C:\Windows\Prefetch && rd . /s /q) > nul 2>&1
+		cd C:\Windows\Temp & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 5 de 10
-		(cd C:\Windows\Temp && rd . /s /q) > nul 2>&1
+		cd C:\Windows\Prefetch & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 6 de 10
-		(cd C:\Windows\SoftwareDistribution\Download && rd . /s /q) > nul 2>&1
+		cd C:\Windows\SoftwareDistribution\Download & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 7 de 10
-		(cd C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp && rd . /s /q) > nul 2>&1
+		cd C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 8 de 10
-		(cd C:\Windows\servicing\LCU && rd . /s /q) > nul 2>&1
+		cd C:\Windows\servicing\LCU & rd . /s /q > nul 2>&1
 		
 	echo ----- Paso 9 de 10
 		chcp 437 >nul 2>& 1
@@ -213,7 +213,6 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 		)
 			chcp 65001 >nul 2>& 1
 			
-	echo.
 	set /a "disk_diff=(disk_after - disk_before)"
 	
 	echo. & echo.
