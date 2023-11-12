@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.18.10.0C
+set ver=0.18.10.1A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set temp=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -118,7 +118,7 @@ echo. & echo ----- Limpiando archivos temporales... & echo.
 	for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
 		set "disk_before=%%a"
 	)
-		chcp 65001 >nul 2>& 1
+	chcp 65001 >nul 2>& 1
 	echo ----- Paso 3 de 12...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
 	echo ----- Paso 4 de 12...
@@ -186,7 +186,7 @@ echo. & echo ----- Limpiando archivos temporales... & COLOR 09
 	for /f "delims=" %%a in ('powershell -command "(Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Root -eq 'C:\' }).Free/1GB"') do (
 		set "disk_before=%%a"
 	)
-		chcp 65001 >nul 2>& 1
+	chcp 65001 >nul 2>& 1
 	echo ----- Paso 1 de 10...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase
 	echo ----- Paso 2 de 10...
