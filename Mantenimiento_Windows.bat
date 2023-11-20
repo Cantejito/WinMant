@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.19.0.1A
+set ver=0.19.0.1B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -71,7 +71,7 @@ echo. & echo ----- [94mBuscando actualizaciones...[97m
 				
 	if %ver% neq %ver_new% (
 		echo. & echo ----- [92mNueva versión disponible: %ver_new%[97m
-		echo. & echo ----- [93mAl actualizar, la herramienta se reiniciará[97m
+		echo. & echo ----- [93mAl actualizar, el script se reiniciará[97m
 		echo. & choice /C SN /N /M "----- ¿Actualizar? (Recomendado) [S/N]: "
 			if errorlevel 2 (
 				del %tempmant%
@@ -97,8 +97,8 @@ echo. & echo ----- [44mMENÚ PRINCIPAL[0m[97m
 	echo. & echo ----- 5  para ACTIVAR/DESACTIVAR HIBERNACIÓN
 	echo. & echo ----- 6  para REESTABLECIMIENTO DE RED
 	echo. & echo ----- 7  para ANÁLISIS DE MEMORIA
-	echo. & echo ----- 8  para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER [91m[AVANZADO][97m
-	echo. & echo ----- 9  para PERMISOS LIMPIEZA "WindowsApps" [91m[AVANZADO][97m
+	echo. & echo ----- 8  para ANÁLISIS AUTOMÁTICO WINDOWS DEFENDER [95m[EN DESARROLLO][97m
+	echo. & echo ----- 9  para PERMISOS LIMPIEZA "WindowsApps" [95m[EN DESARROLLO][97m
 			echo "C:\Program Files\WindowsApps" >nul
 			
 echo. & echo.
@@ -134,7 +134,7 @@ echo. & echo ----- [94mVerificando estado de Windows...[97m
 					color 4F & echo ----- SE HAN ENCONTRADO DAÑOS EN LA IMAGEN DEL SISTEMA
 					echo. & echo ----- Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
 					echo. & echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-					echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento
+					echo ----- importantes y póngase en contacto con un técnico para recibir asesoramiento
 					echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 				)
 		)
@@ -159,7 +159,7 @@ echo. & echo ----- [94mVerificando estado de Windows...[97m
 					color 4F & echo ----- SE HAN ENCONTRADO DAÑOS EN LA IMAGEN DEL SISTEMA
 					echo. & echo ----- Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
 					echo. & echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-					echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento
+					echo ----- importantes y póngase en contacto con un técnico para recibir asesoramiento
 					echo. & echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU
 				)
 		)
@@ -331,10 +331,10 @@ echo. & echo ----- [94mComprobando discos...[97m
 		PowerShell Write-Host -Fore Red ----- Error detectado. Ejecutando reparaciones...
 			chkdsk /r /scan /perf >nul
 			echo.
-			echo ----- Reinicie la herramienta y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS"
+			echo ----- Vuelva al menú y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS"
 			echo.
 			echo ----- Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-			echo ----- importantes y pongase en contacto con un técnico para recibir asesoramiento
+			echo ----- importantes y póngase en contacto con un técnico para recibir asesoramiento
 			echo.
 			echo ---------------------------------------------------------------------------------- & pause >nul & goto MENU)
 				goto COMPLETADO
@@ -394,7 +394,7 @@ echo [97m----------------------------------------------------------------------
 
 echo. & echo ----- Ejecutando programandor de análisis... & COLOR 09
 	mdsched.exe
-		echo. & echo [93m----- La duracion del análisis puede tardar varias horas[97m
+		echo. & echo [93m----- La duración del análisis puede tardar varias horas[97m
 		echo. & echo ----- Pulse INTRO para continuar & pause >nul
 			goto COMPLETADO.REINICIO
 			
@@ -402,7 +402,7 @@ echo. & echo ----- Ejecutando programandor de análisis... & COLOR 09
 CLS
 echo [97m----------------------------------------------------------------------------------
 
-echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCIÓN PUEDE COMPROMETER SU SISTEMA[97m
+echo. & echo ----- [91m¡ATENCIÓN! ESTA FUNCIÓN PUEDE COMPROMETER EL SISTEMA[97m
 echo.
 	echo. & echo ----- M para Volver al menú
 	echo. & echo ----- CONFIRMAR para Continuar
@@ -452,7 +452,7 @@ echo. & echo ----- Obteniendo ajustes de análisis automático... & COLOR 09
 CLS
 echo [97m----------------------------------------------------------------------------------
 
-echo. & echo ----- [91m¡ATENCIÓN! EL USO INADECUADO DE ESTA FUNCION PUEDE COMPROMETER SU SISTEMA.[97m
+echo. & echo ----- [91m¡ATENCIÓN! ESTA FUNCIÓN PUEDE COMPROMETER EL SISTEMA[97m
 	echo.
 	echo. & echo ----- M para Volver al menú
 	echo. & echo ----- CONFIRMAR para Continuar
