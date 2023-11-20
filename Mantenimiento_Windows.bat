@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.19.0.1D
+set ver=0.19.1.0A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -125,22 +125,32 @@ echo [97m───────────────────────�
 
 echo. & echo ───── [94mVerificando estado de Windows...[97m
 
-	echo . & echo ───── Paso 1 de 2
+	echo. & echo ───── Verificando estado de imágen...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
-			echo. & PowerShell Write-Host -Fore Red ───── Error detectado. Ejecutando reparaciones...
-			echo. & DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Restorehealth >nul	
-			echo ───── Reverificando estado de Windows... & echo.
-				DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
-					echo ───── [91mSE HAN ENCONTRADO DAÑOS EN LA IMAGEN DEL SISTEMA[97m
-					echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
-					echo. & echo ───── Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-					echo ───── importantes y póngase en contacto con un técnico para recibir asesoramiento
+			echo. & echo ───── [91mError detectado, ejecutando reparaciones...[97m
+				echo. & DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Restorehealth >nul	
+					echo ───── Reverificando estado... & echo.
+						DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
+							echo ───── [91mNo se pudo reparar[97m
+							echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
+							echo. & echo ───── Se recomienda hacer una copia de seguridad
+							echo ───── de todos los archivos importantes
+							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
+						)
+		)
+			echo ───── [92mCompletado[97m
+	
+	echo ───── Verificando estado de archivos...
+		SFC /scannow >nul || (
+			echo ───── [91mError detectado, ejecutando reparaciones...[97m
+				SFC /scannow >nul || (
+					echo ───── [91mNo se pudo reparar[97m
+					echo. & echo ───── Se recomienda hacer una copia de seguridad
+					echo ───── de todos los archivos importantes
 					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
 				)
 		)
-	
-	echo ───── Paso 2 de 2
-		SFC /scannow >nul
+			echo ───── [92mCompletado[97m
 		
 	goto TEMP.COMPLETO
 	
@@ -150,22 +160,32 @@ echo [97m───────────────────────�
 
 echo. & echo ───── [94mVerificando estado de Windows...[97m
 
-	echo . & echo ───── Paso 1 de 2
+	echo. & echo ───── Verificando estado de imágen...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
-			echo. & PowerShell Write-Host -Fore Red ───── Error detectado. Ejecutando reparaciones...
-			echo. & DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Restorehealth >nul	
-			echo ───── Reverificando estado de Windows... & echo.
-				DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
-					echo ───── [91mSE HAN ENCONTRADO DAÑOS EN LA IMAGEN DEL SISTEMA[97m
-					echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
-					echo. & echo ───── Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-					echo ───── importantes y póngase en contacto con un técnico para recibir asesoramiento
+			echo. & echo ───── [91mError detectado, ejecutando reparaciones...[97m
+				echo. & DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Restorehealth >nul	
+					echo ───── Reverificando estado... & echo.
+						DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
+							echo ───── [91mNo se pudo reparar[97m
+							echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
+							echo. & echo ───── Se recomienda hacer una copia de seguridad
+							echo ───── de todos los archivos importantes
+							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
+						)
+		)
+			echo ───── [92mCompletado[97m
+	
+	echo ───── Verificando estado de archivos...
+		SFC /scannow >nul || (
+			echo ───── [91mError detectado, ejecutando reparaciones...[97m
+				SFC /scannow >nul || (
+					echo ───── [91mNo se pudo reparar[97m
+					echo. & echo ───── Se recomienda hacer una copia de seguridad
+					echo ───── de todos los archivos importantes
 					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
 				)
 		)
-	
-	echo ───── Paso 2 de 2
-		SFC /scannow >nul
+			echo ───── [92mCompletado[97m
 		
 	goto COMPLETADO.REINICIO
 	
