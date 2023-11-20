@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.19.0.0A
+set ver=0.19.0.1A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -216,17 +216,6 @@ echo. & echo ----- [94mLimpiando archivos temporales...[97m
 				echo ----- [91mCancelado, ruta no encontrada[97m
 			) else (
 				echo ----- [92mCompletado[97m & rd . /s /q > nul 2>&1
-			)
-			
-	echo ----- Limpiando caché de Discord...
-		cd %appdata%\discord\Cache > nul 2>&1
-			if errorlevel 1 (
-				echo ----- [91mCancelado, ruta no encontrada[97m
-			) else (
-				rd . /s /q > nul 2>&1
-				cd %appdata%\discord\Code Cache > nul 2>&1
-				rd . /s /q > nul 2>&1
-				echo ----- [92mCompletado[97m
 			)
 			
 	echo ----- Limpiando papelera...
