@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.19.0.1C
+set ver=0.19.0.1D
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -26,13 +26,13 @@ echo. & echo [41m────────────────────�
 
 echo. & echo ───── [7;95mNO ME HAGO RESPONSABLE DE PÉRDIDA DE DATOS Y/O PROBLEMAS CAUSADOS[0m[97m
 
-echo. & echo ───── [41mREQUISITOS:[0m[97m
+echo. & echo ───── [41mREQUISITOS[0m[97m
 
 echo. & echo ───── NO USAR SI HAY ACTUALIZACIONES EN CURSO
 
 echo. & echo ───── TENER WINDOWS COMPLETAMENTE ACTUALIZADO
 
-echo. & echo ───── [43mRECOMENDACIONES:[0m[97m
+echo. & echo ───── [43mRECOMENDACIONES[0m[97m
 
 echo. & echo ───── CERRAR TODOS LOS PROGRAMAS
 
@@ -40,7 +40,7 @@ echo. & echo ───── DESACTIVAR EL ANTIVIRUS PARA MEJORAR LA VELOCIDAD D
 
 echo. & echo ───── ESPERE A QUE SE COMPLETE LA OPERACIÓN ANTES DE CERRAR EL SCRIPT
 
-echo. & echo ───── [44mINFORMACIÓN:[0m[97m
+echo. & echo ───── [44mINFORMACIÓN[0m[97m
 
 echo. & echo ───── ALGUNAS FUNCIONES PUEDEN TARDAR VARIOS MINUTOS EN COMPLETARSE
 
