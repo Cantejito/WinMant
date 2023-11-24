@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.19.1.0A
+set ver=0.19.1.0B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -202,11 +202,11 @@ echo. & echo ───── [94mLimpiando archivos temporales...[97m
 		)
 			chcp 65001 >nul 2>& 1
 			
-	echo ───── Limpiando WinSxS...
+	echo. & echo ───── Limpiando WinSxS...
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /StartComponentCleanup /ResetBase > nul 2>&1
 			echo ───── [92mCompletado[97m
 			
-	echo ───── Limpiando local temp...
+	echo. & echo ───── Limpiando local temp...
 		cd %temp% & rd . /s /q > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -214,7 +214,7 @@ echo. & echo ───── [94mLimpiando archivos temporales...[97m
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando C:\Temp...
+	echo. & echo ───── Limpiando C:\Temp...
 		cd C:\Temp > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -222,7 +222,7 @@ echo. & echo ───── [94mLimpiando archivos temporales...[97m
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando Windows temp...
+	echo. & echo ───── Limpiando Windows temp...
 		cd C:\Windows\Temp & rd . /s /q > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -230,7 +230,7 @@ echo. & echo ───── [94mLimpiando archivos temporales...[97m
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando actualizaciones descargadas...
+	echo. & echo ───── Limpiando actualizaciones descargadas...
 		cd C:\Windows\SoftwareDistribution\Download > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -238,7 +238,7 @@ echo. & echo ───── [94mLimpiando archivos temporales...[97m
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando papelera...
+	echo. & echo ───── Limpiando papelera...
 		chcp 437 >nul 2>& 1
 			PowerShell Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 				chcp 65001 >nul 2>& 1
@@ -252,8 +252,8 @@ echo. & echo ───── [94mLimpiando archivos temporales...[97m
 			
 	set /a "disk_diff=(disk_after - disk_before)"
 	
-	echo.
-	echo ───── [94mAproximadamente %disk_diff%GB liberados (libera más desactivando la hibernación)
+	echo. & echo.
+	echo ───── [94mAproximadamente [92m%disk_diff% GB [94mliberados (libera más desactivando la hibernación)
 			goto COMPLETADO.REINICIO
 			
 :TEMP.ADV
@@ -283,7 +283,7 @@ echo. & echo ───── [94mLimpiando archivos temporales avanzados...[97
 		)
 			chcp 65001 >nul 2>& 1
 			
-	echo ───── Limpiando archivos precargados...
+	echo. & echo ───── Limpiando archivos precargados...
 		cd C:\Windows\Prefetch > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -291,7 +291,7 @@ echo. & echo ───── [94mLimpiando archivos temporales avanzados...[97
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando actualizaciones acumulativas...
+	echo. & echo ───── Limpiando actualizaciones acumulativas...
 		cd C:\Windows\servicing\LCU > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -299,7 +299,7 @@ echo. & echo ───── [94mLimpiando archivos temporales avanzados...[97
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando servicios de red temporales...
+	echo. & echo ───── Limpiando servicios de red temporales...
 		cd C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -307,7 +307,7 @@ echo. & echo ───── [94mLimpiando archivos temporales avanzados...[97
 				echo ───── [92mCompletado[97m & rd . /s /q > nul 2>&1
 			)
 			
-	echo ───── Limpiando Google local temp...
+	echo. & echo ───── Limpiando Google local temp...
 		cd %localappdata%\Google\Chrome\User Data\Default\Service Worker > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -320,7 +320,7 @@ echo. & echo ───── [94mLimpiando archivos temporales avanzados...[97
 				echo ───── [92mCompletado[97m
 			)
 			
-	echo ───── Limpiando caché DirectX de NVIDIA...
+	echo. & echo ───── Limpiando caché DirectX de NVIDIA...
 		cd %localappdata%\NVIDIA\DXCache > nul 2>&1
 			if errorlevel 1 (
 				echo ───── [91mCancelado, ruta no encontrada[97m
@@ -337,7 +337,7 @@ echo. & echo ───── [94mLimpiando archivos temporales avanzados...[97
 	set /a "disk_diff=(disk_after - disk_before)"
 	
 	echo. & echo.
-	echo ───── Aproximadamente %disk_diff%GB liberados (libera más desactivando la hibernación)
+	echo ───── [94mAproximadamente [92m%disk_diff% GB [94mliberados (libera más desactivando la hibernación)
 			goto COMPLETADO.REINICIO
 
 :DISCOS
@@ -492,13 +492,13 @@ echo. & echo ───── Otorgando permisos en C:\Program Files\WindowsApps.
 		goto COMPLETADO
 		
 :COMPLETADO
-echo [92m
-echo. & echo ───── Completado
-echo. & echo ───── Pulse INTRO para volver al menú
+echo [97m
+echo. & echo ───── [92mCompletado[97m
+echo. & echo ───── [94mPulse INTRO para volver al menú[97m
 echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
 
 :COMPLETADO.REINICIO
-echo [92m
-echo. & echo ───── Completado (se recomienda reiniciar)
-echo. & echo ───── Pulse INTRO para volver al menú
+echo [97m
+echo. & echo ───── [92mCompletado[97m (se recomienda reiniciar)
+echo. & echo ───── [94mPulse INTRO para volver al menú[97m
 echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
