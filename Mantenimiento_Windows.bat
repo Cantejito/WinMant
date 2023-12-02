@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.0.0A
+set ver=0.20.1.0A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -47,6 +47,7 @@ echo. & echo ───── Algunas funciones pueden tardar minutos e incluso h
 echo. & echo [41m────────────────────────────────────IMPORTANTE────────────────────────────────────[0m[97m
 
 echo. & echo ───── Pulse INTRO si ha leído, entiende y acepta todo lo anterior
+
 echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
 
 :UPDATE
@@ -54,9 +55,6 @@ CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
 echo. & echo ───── [94mBuscando actualizaciones...[97m
-	timeout 1 > nul 2>&1
-	
-echo. & echo ───── [93mVersión actual:[97m     %ver%
 	curl -o %tempmant% %url% -s
 		if errorlevel 1 (
 			echo.
@@ -71,6 +69,7 @@ echo. & echo ───── [93mVersión actual:[97m     %ver%
 				del "%tempmant%.new"
 				
 	if %ver% neq %ver_new% (
+		echo. & echo ───── [93mVersión actual:[97m     %ver%
 		echo. & echo ───── [92mVersión disponible:[97m %ver_new%
 		echo. & echo ───── [91mAl actualizar, el script se reiniciará[97m
 		echo.
@@ -115,7 +114,6 @@ set /p MENU=───── Ejecutar...
 	if /i %MENU% == 5 goto MEMORIA
 	if /i %MENU% == U goto UPDATE
 	if /i %MENU% == ADV goto MENU.ADV
-	goto MENU
 	
 :MENU.ADV
 CLS
@@ -137,7 +135,6 @@ set /p MENU.ADV=───── Ejecutar...
 	if /i %MENU.ADV% == 1a goto TEMP.ADV
 	if /i %MENU.ADV% == 2 goto DEFENDER
 	if /i %MENU.ADV% == 3 goto WINDOWSAPPS
-	goto MENU.ADV
 	
 :COMPLETO
 CLS
@@ -149,13 +146,15 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 		DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
 			echo. & echo ───── [91mError detectado, ejecutando reparaciones...[97m
 				echo. & DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Restorehealth >nul	
-					echo ───── Reverificando estado... & echo.
+					echo ───── Reverificando estado...
+						echo.
 						DISM.exe /Quiet /NoRestart /Online /Cleanup-Image /Scanhealth >nul || (
 							echo ───── [91mNo se pudo reparar[97m
 							echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
 							echo. & echo ───── Se recomienda hacer una copia de seguridad
-							echo ───── de todos los archivos importantes
-							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
+									echo ───── de todos los archivos importantes
+							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
+								goto MENU
 						)
 		)
 			echo ───── [92mCompletado[97m
@@ -166,8 +165,9 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 				SFC /scannow >nul || (
 					echo ───── [91mNo se pudo reparar[97m
 					echo. & echo ───── Se recomienda hacer una copia de seguridad
-					echo ───── de todos los archivos importantes
-					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
+							echo ───── de todos los archivos importantes
+					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
+						goto MENU
 				)
 		)
 			echo ───── [92mCompletado[97m
@@ -190,7 +190,8 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 							echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
 							echo. & echo ───── Se recomienda hacer una copia de seguridad
 							echo ───── de todos los archivos importantes
-							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
+							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
+								goto MENU
 						)
 		)
 			echo ───── [92mCompletado[97m
@@ -202,7 +203,8 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 					echo ───── [91mNo se pudo reparar[97m
 					echo. & echo ───── Se recomienda hacer una copia de seguridad
 					echo ───── de todos los archivos importantes
-					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU
+					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
+						goto MENU
 				)
 		)
 			echo ───── [92mCompletado[97m
@@ -213,7 +215,8 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
-	:TEMP.COMPLETO
+:TEMP.COMPLETO
+
 echo. & echo ───── [94mLimpiando archivos temporales básicos...[97m
 
 	echo. & chcp 437 >nul 2>& 1
@@ -262,7 +265,7 @@ echo. & echo ───── [94mLimpiando archivos temporales básicos...[97m
 	
 	echo. & echo.
 	echo ───── [94mAproximadamente [92m%Disk.D% GB [94mliberados (libera más desactivando la hibernación)
-			goto COMPLETADO.REINICIO
+		goto COMPLETADO.REINICIO
 			
 :TEMP.PRO
 echo. & echo ───── [94mLimpiando archivos temporales en profundidad...[97m
@@ -315,23 +318,20 @@ echo. & echo ───── [94mLimpiando archivos temporales en profundidad..
 	
 	echo. & echo.
 	echo ───── [94mAproximadamente [92m%Disk.D% GB [94mliberados (libera más desactivando la hibernación)
-			goto COMPLETADO.REINICIO
-
-
-
+		goto COMPLETADO.REINICIO
+		
 :TEMP.ADV
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
 echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD DEL EQUIPO[0m[97m
-echo ───── [97;41mO CAUSAR PÉRDIDA DE DATOS[0m[97m
+		echo ───── [97;41mO CAUSAR PÉRDIDA DE DATOS[0m[97m
 
 echo. & echo ───── [41m SE REQUIERE CERRAR TODOS LOS PROGRAMAS[0m[97m
 
 	echo. & echo ───── M = Volver al menú
 	echo. & echo ───── CONFIRMAR = Continuar
-	echo.
-	echo.
+	echo. & echo.
 		set /p T.A=───── Ejecutar... 
 			if /i "%T.A%" == "" goto TEMP.ADV
 			if /i %T.A% == M goto MENU
@@ -379,7 +379,7 @@ echo. & echo ───── [94mLimpiando archivos temporales... [95m[AVANZAD
 	
 	echo. & echo.
 	echo ───── [94mAproximadamente [92m%Disk.D% GB [94mliberados (libera más desactivando la hibernación)
-			goto COMPLETADO.REINICIO
+		goto COMPLETADO.REINICIO
 
 :DISCOS
 CLS
@@ -397,7 +397,9 @@ echo. & echo ───── [94mComprobando discos...[97m
 			echo ───── Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
 			echo ───── importantes y póngase en contacto con un técnico para recibir asesoramiento
 			echo.
-			echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & goto MENU)
+			echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
+				goto MENU
+			)
 				goto COMPLETADO
 				
 :HIBERNAR
@@ -406,33 +408,32 @@ echo [97m───────────────────────�
 
 echo.
 echo ───── [94mObteniendo ajustes de hibernación...[97m
+
 	for /f "tokens=3" %%a in ('reg query HKLM\SYSTEM\ControlSet001\Control\Power\ ^|find /i "HibernateEnabled "') do if %%a==0x1 (
-		echo.
-		echo.
+		echo. & echo.
 		echo ───── [93mHibernación activada[97m
 		echo. & echo ───── 0 = Volver al menú
 		echo. & echo ───── 1 = Desactivar
 		
-		echo.
+		echo. & echo.
 		choice /C 01 /N /M "─────  Ejecutar... "
 		if errorlevel 2 (
 			powercfg.exe /h off > nul 2>&1 & echo.
-			echo. & echo ───── Hibernación desactivada & goto COMPLETADO
+				goto HIBERNAR
 		)
 			goto MENU
 	)
 	
-		echo.
-		echo.
+		echo. & echo.
 		echo ───── [93mHibernación desactivada[97m
 		echo. & echo ───── 0 = Volver al menú
 		echo. & echo ───── 1 = Activar
 		
-		echo.
+		echo. & echo.
 		choice /C 01 /N /M "─────  Ejecutar... "
 		if errorlevel 2 (
 			powercfg.exe /h on > nul 2>&1 & echo.
-			echo. & echo ───── Hibernación activada & goto COMPLETADO
+				goto HIBERNAR
 		)
 			goto MENU
 :RED
@@ -441,19 +442,30 @@ echo [97m───────────────────────�
 
 echo. & echo ───── [91mReestableciendo red...[97m
 
-	netsh winsock reset
-	netsh int ip reset
-	ipconfig /release
-	ipconfig /renew
-	ipconfig /flushdns
-	ipconfig /registerdns
-		goto COMPLETADO.REINICIO
+		echo. & echo.
+		echo ───── [93mContinuar?[97m
+		echo. & echo ───── 0 = Volver al menú
+		echo. & echo ───── 1 = Continuar
+		
+		echo. & echo.
+		choice /C 01 /N /M "─────  Ejecutar... "
+		if errorlevel 2 (
+			netsh winsock reset
+			netsh int ip reset
+			ipconfig /release
+			ipconfig /renew
+			ipconfig /flushdns
+			ipconfig /registerdns
+				goto COMPLETADO.REINICIO
+		)
+			goto MENU
 		
 :MEMORIA
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
 echo. & echo ───── [91mEjecutando programandor de análisis...[97m
+
 	mdsched.exe
 		echo. & echo [93m───── La duración del análisis puede tardar varias horas[97m
 			goto COMPLETADO.REINICIO
@@ -463,28 +475,27 @@ CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
 echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD DEL EQUIPO[0m[97m
-echo ───── [97;41mO CAUSAR PÉRDIDA DE DATOS[0m[97m
-echo.
+		echo ───── [97;41mO CAUSAR PÉRDIDA DE DATOS[0m[97m
+		
+	echo.
 	echo. & echo ───── 0 = Volver al menú
 	echo. & echo ───── CONFIRMAR = Continuar
-	echo.
-	echo.
+	echo. & echo.
 		set /p DEF=───── Ejecutar...  
 			if /i "%DEF%" == "" goto DEFENDER
 			if /i %DEF% == 0 goto MENU
 			if /i %DEF% == CONFIRMAR goto DEFENDER.CHECK
-			goto DEFENDER
 			
 	:DEFENDER.CHECK
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
 echo. & echo ───── [94mObteniendo ajustes de análisis automático...[97m
+
 	for /f "tokens=2 delims=:" %%a in ('schtasks /query /tn "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /fo list ^| find "Estado"') do set "status=%%a"
 		set "status=%status: =%"
 		if /i "%status%"=="Deshabilitado" goto DEFENDER.OFF
-			echo.
-			echo.
+			echo. & echo.
 			echo ───── [93mEstado actual: Activado[97m
 				echo. & echo ───── 0 = Volver al menú
 				echo. & echo ───── 1 = Desactivar
@@ -492,13 +503,13 @@ echo. & echo ───── [94mObteniendo ajustes de análisis automático...
 					set /p DEF.C=───── Ejecutar... 
 					if /i "%DEF.C%" == "" goto DEFENDER.CHECK
 					if /i %DEF.C% == 0 goto MENU
-					if /i %DEF.C% == 1 schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-						echo. & echo ───── [92mAnálisis automático desactivado[97m
+					if /i %DEF.C% == 1 schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
+						echo. & echo.
+						echo ───── [92mAnálisis automático desactivado[97m
 							goto COMPLETADO
 							
 	:DEFENDER.OFF
-			echo.
-			echo.		
+			echo. & echo.		
 			echo ───── [93mEstado actual: Desactivado[97m
 				echo. & echo ───── 0 = Volver al menú
 				echo. & echo ───── 1 = Activar
@@ -506,8 +517,9 @@ echo. & echo ───── [94mObteniendo ajustes de análisis automático...
 					set /p DEF.O=───── Ejecutar... 
 					if /i "%DEF.O%" == "" goto DEFENDER.CHECK
 					if /i %DEF.O% == 0 goto MENU
-					if /i %DEF.O% == 1 schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul & echo.
-						echo. & echo ───── [92mAnálisis automático activado[97m
+					if /i %DEF.O% == 1 schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
+						echo. & echo.
+						echo ───── [92mAnálisis automático activado[97m
 							goto COMPLETADO
 							
 :WINDOWSAPPS
@@ -515,25 +527,25 @@ CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
 echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD DEL EQUIPO[0m[97m
-echo ───── [97;41mO CAUSAR PÉRDIDA DE DATOS[0m[97m
+		echo ───── [97;41mO CAUSAR PÉRDIDA DE DATOS[0m[97m
+		
 	echo.
 	echo. & echo ───── 0 = Volver al menú
 	echo. & echo ───── CONFIRMAR = Continuar
-		echo.
-		echo.
+		echo. & echo.
 		set /p WA=───── Ejecutar... 
 		if /i "%WA%" == "" goto WINDOWSAPPS
 		if /i %WA% == 0 goto MENU
 		if /i %WA% == CONFIRMAR goto WINDOWSAPPS.CHECK
-		goto WINDOWSAPPS
 		
 	:WINDOWSAPPS.CHECK
-echo. & echo ───── Otorgando permisos en C:\Program Files\WindowsApps... & COLOR 09
+echo. & echo ───── Otorgando permisos en C:\Program Files\WindowsApps...
+
 	takeown /f "C:\Program Files\WindowsApps" /r >nul
-	icacls "C:\Program Files\WindowsApps" /reset /t >nul
-	start explorer.exe "C:\Program Files\WindowsApps" >nul
-		goto COMPLETADO
-		
+		icacls "C:\Program Files\WindowsApps" /reset /t >nul
+			start explorer.exe "C:\Program Files\WindowsApps" >nul
+				goto COMPLETADO
+				
 :COMPLETADO
 echo [97m
 echo. & echo ───── [92mCompletado[97m
