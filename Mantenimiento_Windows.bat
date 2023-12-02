@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.1.1A
+set ver=0.20.2.0A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -114,6 +114,7 @@ set /p MENU=───── Ejecutar...
 	if /i %MENU% == 5 goto MEMORIA
 	if /i %MENU% == U goto UPDATE
 	if /i %MENU% == ADV goto MENU.ADV
+		goto MENU
 	
 :MENU.ADV
 CLS
@@ -135,6 +136,7 @@ set /p MENU.ADV=───── Ejecutar...
 	if /i %MENU.ADV% == 1a goto TEMP.ADV
 	if /i %MENU.ADV% == 2 goto DEFENDER
 	if /i %MENU.ADV% == 3 goto WINDOWSAPPS
+		goto MENU.ADV
 	
 :COMPLETO
 CLS
@@ -336,6 +338,7 @@ echo. & echo ───── [41m SE REQUIERE CERRAR TODOS LOS PROGRAMAS[0m[9
 			if /i "%T.A%" == "" goto TEMP.ADV
 			if /i %T.A% == M goto MENU
 			if /i %T.A% == CONFIRMAR goto TEMP.ADV.CHECK
+				goto TEMP.ADV
 				
 	:TEMP.ADV.CHECK
 echo. & echo ───── [94mLimpiando archivos temporales... [95m[AVANZADO][97m
@@ -485,6 +488,7 @@ echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD
 			if /i "%DEF%" == "" goto DEFENDER
 			if /i %DEF% == 0 goto MENU
 			if /i %DEF% == CONFIRMAR goto DEFENDER.CHECK
+				goto DEFENDER
 			
 	:DEFENDER.CHECK
 CLS
@@ -503,11 +507,13 @@ echo. & echo ───── [94mObteniendo ajustes de análisis automático...
 					set /p DEF.C=───── Ejecutar... 
 					if /i "%DEF.C%" == "" goto DEFENDER.CHECK
 					if /i %DEF.C% == 0 goto MENU
-					if /i %DEF.C% == 1 schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
-						echo. & echo.
-						echo ───── [92mAnálisis automático desactivado[97m
-							goto COMPLETADO
-							
+					if /i %DEF.C% == 1 (
+						schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
+							echo. & echo.
+							echo ───── [92mAnálisis automático desactivado[97m
+								goto COMPLETADO
+					)
+						goto DEFENDER.CHECK
 	:DEFENDER.OFF
 			echo. & echo.		
 			echo ───── [93mEstado actual: Desactivado[97m
@@ -517,11 +523,13 @@ echo. & echo ───── [94mObteniendo ajustes de análisis automático...
 					set /p DEF.O=───── Ejecutar... 
 					if /i "%DEF.O%" == "" goto DEFENDER.CHECK
 					if /i %DEF.O% == 0 goto MENU
-					if /i %DEF.O% == 1 schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
-						echo. & echo.
-						echo ───── [92mAnálisis automático activado[97m
-							goto COMPLETADO
-							
+					if /i %DEF.O% == 1 (
+						schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
+							echo. & echo.
+							echo ───── [92mAnálisis automático activado[97m
+								goto COMPLETADO
+					)
+						goto DEFENDER.CHECK
 :WINDOWSAPPS
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
@@ -537,8 +545,10 @@ echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD
 		if /i "%WA%" == "" goto WINDOWSAPPS
 		if /i %WA% == 0 goto MENU
 		if /i %WA% == CONFIRMAR goto WINDOWSAPPS.CHECK
-		
+			goto WINDOWSAPPS
+			
 	:WINDOWSAPPS.CHECK
+echo.
 echo. & echo ───── Otorgando permisos en C:\Program Files\WindowsApps...
 
 	takeown /f "C:\Program Files\WindowsApps" /r >nul
