@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.1.0A
+set ver=0.20.1.1A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -440,10 +440,10 @@ echo ───── [94mObteniendo ajustes de hibernación...[97m
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 
-echo. & echo ───── [91mReestableciendo red...[97m
+echo. & echo ───── [94mReestableciendo red...[97m
 
 		echo. & echo.
-		echo ───── [93mContinuar?[97m
+		echo ───── [93mSeguro que quiere continuar?[97m
 		echo. & echo ───── 0 = Volver al menú
 		echo. & echo ───── 1 = Continuar
 		
