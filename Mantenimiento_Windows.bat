@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.1.2A
+set ver=0.20.1.2B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set tempmant=C:\Windows\Temp\Mantenimiento_Windows.bat
 title Versión %ver%
@@ -165,7 +165,7 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 		SFC /scannow >nul || (
 			echo ───── [91mError detectado, ejecutando reparaciones...[97m
 				SFC /scannow >nul || (
-					echo ───── [91mNo se pudo reparar[97m
+					echo. & ───── [91mNo se pudo reparar[97m
 					echo. & echo ───── Se recomienda hacer una copia de seguridad
 							echo ───── de todos los archivos importantes
 					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
@@ -191,26 +191,26 @@ echo. & echo ───── [94mVerificando estado de Windows...[97m
 							echo ───── [91mNo se pudo reparar[97m
 							echo. & echo ───── Vuelva al menú y ejecute "VERIFICAR ESTADO DE WINDOWS"
 							echo. & echo ───── Se recomienda hacer una copia de seguridad
-							echo ───── de todos los archivos importantes
+									echo ───── de todos los archivos importantes
 							echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
 								goto MENU
 						)
 		)
 			echo ───── [92mCompletado[97m
-	
+			
 	echo ───── Verificando estado de archivos...
 		SFC /scannow >nul || (
 			echo ───── [91mError detectado, ejecutando reparaciones...[97m
 				SFC /scannow >nul || (
-					echo ───── [91mNo se pudo reparar[97m
+					echo. & echo ───── [91mNo se pudo reparar[97m
 					echo. & echo ───── Se recomienda hacer una copia de seguridad
-					echo ───── de todos los archivos importantes
+							echo ───── de todos los archivos importantes
 					echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
 						goto MENU
 				)
 		)
 			echo ───── [92mCompletado[97m
-		
+			
 	goto COMPLETADO.REINICIO
 	
 :TEMP
@@ -392,18 +392,15 @@ echo. & echo ───── [94mComprobando discos...[97m
 
 	echo.
 	wmic diskdrive get status || (
-		PowerShell Write-Host -Fore Red ───── Error detectado. Ejecutando reparaciones...
+		echo ───── [91mError detectado, ejecutando reparaciones...[97m
 			chkdsk /r /scan /perf >nul
-			echo.
-			echo ───── Vuelva al menú y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS"
-			echo.
-			echo ───── Si vuelve a ver este mensaje, haga copia de seguridad de todos los archivos
-			echo ───── importantes y póngase en contacto con un técnico para recibir asesoramiento
-			echo.
-			echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
-				goto MENU
-			)
-				goto COMPLETADO
+				echo. & echo ───── Vuelva al menú y ejecute "COMPROBACIÓN Y REPARACION DE DISCOS"
+				echo. & echo ───── Se recomienda hacer una copia de seguridad
+						echo ───── de todos los archivos importantes
+				echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
+					goto MENU
+		)
+			goto COMPLETADO
 				
 :HIBERNAR
 CLS
@@ -426,7 +423,6 @@ echo ───── [94mObteniendo ajustes de hibernación...[97m
 		)
 			goto MENU
 	)
-	
 		echo. & echo.
 		echo ───── [93mHibernación desactivada[97m
 		echo. & echo ───── 0 = Volver al menú
@@ -482,13 +478,13 @@ echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD
 		
 	echo.
 	echo. & echo ───── 0 = Volver al menú
-	echo. & echo ───── CONFIRMAR = Continuar
+	echo. & echo ───── 1 = Continuar
 	echo. & echo.
-		set /p DEF=───── Ejecutar...  
-			if /i "%DEF%" == "" goto DEFENDER
-			if /i %DEF% == 0 goto MENU
-			if /i %DEF% == CONFIRMAR goto DEFENDER.CHECK
-				goto DEFENDER
+		choice /C 01 /N /M "─────  Ejecutar... "
+			if errorlevel 2 (
+				goto DEFENDER.CHECK
+			)
+				goto MENU
 			
 	:DEFENDER.CHECK
 CLS
@@ -501,35 +497,30 @@ echo. & echo ───── [94mObteniendo ajustes de análisis automático...
 		if /i "%status%"=="Deshabilitado" goto DEFENDER.OFF
 			echo. & echo.
 			echo ───── [93mEstado actual: Activado[97m
-				echo. & echo ───── 0 = Volver al menú
-				echo. & echo ───── 1 = Desactivar
-				echo. & echo.
-					set /p DEF.C=───── Ejecutar... 
-					if /i "%DEF.C%" == "" goto DEFENDER.CHECK
-					if /i %DEF.C% == 0 goto MENU
-					if /i %DEF.C% == 1 (
-						schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
-							echo. & echo.
-							echo ───── [92mAnálisis automático desactivado[97m
-								goto COMPLETADO
-					)
+			echo.
+			echo. & echo ───── 0 = Volver al menú
+			echo. & echo ───── 1 = Desactivar
+			echo. & echo.
+				choice /C 01 /N /M "─────  Ejecutar... "
+				if errorlevel 2 (
+					schtasks /Change /Disable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
 						goto DEFENDER.CHECK
+				)
+					goto MENU
+					
 	:DEFENDER.OFF
 			echo. & echo.		
 			echo ───── [93mEstado actual: Desactivado[97m
-				echo. & echo ───── 0 = Volver al menú
-				echo. & echo ───── 1 = Activar
-				echo. & echo.	
-					set /p DEF.O=───── Ejecutar... 
-					if /i "%DEF.O%" == "" goto DEFENDER.CHECK
-					if /i %DEF.O% == 0 goto MENU
-					if /i %DEF.O% == 1 (
-						schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
-							echo. & echo.
-							echo ───── [92mAnálisis automático activado[97m
-								goto COMPLETADO
-					)
+			echo.
+			echo. & echo ───── 0 = Volver al menú
+			echo. & echo ───── 1 = Activar
+			echo. & echo.	
+				choice /C 01 /N /M "─────  Ejecutar... "
+				if errorlevel 2 (
+					schtasks /Change /Enable /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" >nul
 						goto DEFENDER.CHECK
+				)
+					goto MENU
 :WINDOWSAPPS
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
@@ -539,13 +530,13 @@ echo. & echo ───── [97;41mESTA FUNCIÓN PUEDE AFECTAR A LA INTEGRIDAD
 		
 	echo.
 	echo. & echo ───── 0 = Volver al menú
-	echo. & echo ───── CONFIRMAR = Continuar
-		echo. & echo.
-		set /p WA=───── Ejecutar... 
-		if /i "%WA%" == "" goto WINDOWSAPPS
-		if /i %WA% == 0 goto MENU
-		if /i %WA% == CONFIRMAR goto WINDOWSAPPS.CHECK
-			goto WINDOWSAPPS
+	echo. & echo ───── 1 = Continuar
+	echo. & echo.
+		choice /C 01 /N /M "─────  Ejecutar... "
+			if errorlevel 2 (
+				goto WINDOWSAPPS.CHECK
+			)
+				goto MENU
 			
 	:WINDOWSAPPS.CHECK
 echo.
