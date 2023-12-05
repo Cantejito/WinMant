@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.2.2C
+set ver=0.20.2.3A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -82,7 +82,7 @@ echo. & echo ───── [94mMENÚ PRINCIPAL[97m
 	echo. & echo ───── 4   =   Reestablecer ajustes de red
 	echo. & echo ───── 5   =   Análisis de memoria
 	echo.
-	echo. & echo ───── [93mUP  =   Comprobar actualizaciones[97m
+	echo. & echo ───── [93mUP  =   Comprobar actualizaciones[97m
 	echo.
 	echo. & echo ───── [93mADV =   Ver requisitos, recomendaciones e información[97m
 	echo.
