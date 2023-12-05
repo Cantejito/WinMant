@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.2.0A
+set ver=0.20.2.1A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -72,13 +72,13 @@ echo. & echo ───── [94mBuscando actualizaciones...[97m
 	findstr \C:"set ver=" %tempmant% > %tempmant%.new
 		set /p ver_new=<"%tempmant%.new"
 			for /f "tokens=2 delims==" %%a in ("!ver_new!") do set "ver_new=%%a"
-				del %aviso%
 				del "%tempmant%.new"
 				
 	if %ver% neq %ver_new% (
-		move /y "%tempmant%" "%~dp0" > nul 2>&1
-			start "" "%~dpnx0"
-				exit
+		del %aviso%
+			move /y "%tempmant%" "%~dp0" > nul 2>&1
+				start "" "%~dpnx0"
+					exit
 	)
 	
 :MENU
