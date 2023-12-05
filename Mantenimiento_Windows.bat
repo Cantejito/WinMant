@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.2.1A
+set ver=0.20.2.2A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -20,26 +20,14 @@ echo.
 echo. & echo ───── Pulse INTRO para salir
 echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & exit
 
-:CHANGELOG
-curl -o %changelog% --create-dirs %url.cgl% -s
-	if errorlevel 1 (
-		echo.
-		echo ───── [91mError al descargar[97m
-			timeout 2 >nul
-				goto MENU
-	)
-
-start %changelog%
-	goto MENU
-
 :AVISO
+MODE CON: COLS=82 LINES=37
 if exist "%aviso%" (
 	goto UPDATE
 )
 	echo > %aviso%
 	
 	:AVISO.CHECK
-MODE CON: COLS=82 LINES=37
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 echo. & echo [41m────────────────────────────────────IMPORTANTE────────────────────────────────────[0m[97m
@@ -525,6 +513,18 @@ echo. & echo ───── Otorgando permisos en C:\Program Files\WindowsApps.
 			start explorer.exe "C:\Program Files\WindowsApps" >nul
 				goto COMPLETADO
 				
+:CHANGELOG
+curl -o %changelog% --create-dirs %url.cgl% -s
+	if errorlevel 1 (
+		echo.
+		echo ───── [91mError al descargar[97m
+			timeout 2 >nul
+				goto MENU
+	)
+
+start %changelog%
+	goto MENU
+	
 :COMPLETADO
 echo [97m
 echo. & echo ───── [92mCompletado[97m
