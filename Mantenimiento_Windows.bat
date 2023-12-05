@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.2.2B
+set ver=0.20.2.2C
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -82,11 +82,11 @@ echo. & echo ───── [94mMENÚ PRINCIPAL[97m
 	echo. & echo ───── 4   =   Reestablecer ajustes de red
 	echo. & echo ───── 5   =   Análisis de memoria
 	echo.
-	echo. & echo ───── [93mU   =   Comprobar actualizaciones del script[97m
+	echo. & echo ───── [93mUP  =   Comprobar actualizaciones[97m
 	echo.
 	echo. & echo ───── [93mADV =   Ver requisitos, recomendaciones e información[97m
 	echo.
-	echo. & echo ───── [94mCGL =   Ver notas del parche[97m
+	echo. & echo ───── [94mREG =   Historial de actualizaciones[97m
 	echo.
 	echo. & echo ───── [95mM.A =   Menú avanzado[97m
 	
@@ -101,9 +101,9 @@ set /p MENU=───── Ejecutar...
 	if /i %MENU% == 3 goto HIBERNAR
 	if /i %MENU% == 4 goto RED
 	if /i %MENU% == 5 goto MEMORIA
-	if /i %MENU% == U goto UPDATE
+	if /i %MENU% == UP goto UPDATE
 	if /i %MENU% == ADV goto AVISO.CHECK
-	if /i %MENU% == CGL goto CHANGELOG
+	if /i %MENU% == REG goto CHANGELOG
 	if /i %MENU% == M.A goto MENU.ADV
 		goto MENU
 		
