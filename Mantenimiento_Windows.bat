@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.2.2A
+set ver=0.20.2.2B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -19,31 +19,6 @@ echo. & echo ───── (CLIC DERECHO EN EL ARCHIVO Y CLIC EN "EJECUTAR COM
 echo.
 echo. & echo ───── Pulse INTRO para salir
 echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul & exit
-
-:AVISO
-MODE CON: COLS=82 LINES=37
-if exist "%aviso%" (
-	goto UPDATE
-)
-	echo > %aviso%
-	
-	:AVISO.CHECK
-CLS
-echo [97m──────────────────────────────────────────────────────────────────────────────────
-echo. & echo [41m────────────────────────────────────IMPORTANTE────────────────────────────────────[0m[97m
-echo. & echo ───── [45mNO ME HAGO RESPONSABLE DE PÉRDIDA DE DATOS Y/O PROBLEMAS CAUSADOS[0m[97m
-echo. & echo ───── [41mREQUISITOS[0m[97m
-echo. & echo ───── No usar si hay actualizaciones en curso
-echo. & echo ───── Tener Windows completamente actualizado
-echo. & echo ───── [93mRECOMENDACIONES[97m
-echo. & echo ───── Cerrar todos los programas
-echo. & echo ───── Desactivar el antivirus para mejorar la velocidad de trabajo
-echo. & echo ───── Esperar a que se complete la operación antes de cerrar el script
-echo. & echo ───── [94mINFORMACIÓN[97m
-echo. & echo ───── Algunas funciones pueden tardar minutos e incluso horas en completarse
-echo. & echo [41m────────────────────────────────────IMPORTANTE────────────────────────────────────[0m[97m
-echo. & echo ───── Pulse INTRO si ha leído, entiende y acepta todo lo anterior
-echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
 
 :UPDATE
 CLS
@@ -68,6 +43,31 @@ echo. & echo ───── [94mBuscando actualizaciones...[97m
 				start "" "%~dpnx0"
 					exit
 	)
+	
+:AVISO
+MODE CON: COLS=82 LINES=37
+if exist "%aviso%" (
+	goto MENU
+)
+	echo > %aviso%
+	
+	:AVISO.CHECK
+CLS
+echo [97m──────────────────────────────────────────────────────────────────────────────────
+echo. & echo [41m────────────────────────────────────IMPORTANTE────────────────────────────────────[0m[97m
+echo. & echo ───── [45mNO ME HAGO RESPONSABLE DE PÉRDIDA DE DATOS Y/O PROBLEMAS CAUSADOS[0m[97m
+echo. & echo ───── [41mREQUISITOS[0m[97m
+echo. & echo ───── No usar si hay actualizaciones en curso
+echo. & echo ───── Tener Windows completamente actualizado
+echo. & echo ───── [93mRECOMENDACIONES[97m
+echo. & echo ───── Cerrar todos los programas
+echo. & echo ───── Desactivar el antivirus para mejorar la velocidad de trabajo
+echo. & echo ───── Esperar a que se complete la operación antes de cerrar el script
+echo. & echo ───── [94mINFORMACIÓN[97m
+echo. & echo ───── Algunas funciones pueden tardar minutos e incluso horas en completarse
+echo. & echo [41m────────────────────────────────────IMPORTANTE────────────────────────────────────[0m[97m
+echo. & echo ───── Pulse INTRO si ha leído, entiende y acepta todo lo anterior
+echo. & echo ────────────────────────────────────────────────────────────────────────────────── & pause >nul
 	
 :MENU
 CLS
