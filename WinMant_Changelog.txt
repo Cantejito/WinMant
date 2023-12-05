@@ -3,8 +3,6 @@
 ───── **0.20.0** ─────
 ○ **Aviso inicial**
 	• Legibilidad mejorada
-	• No volverá a salir una vez visto por primera vez
-		(se puede abrir manualmente)
 ○ **Menú de actualizaciones**
 	• Pequeños cambios
 	• Automatizado
@@ -23,7 +21,16 @@
 	• Pequeños cambios y optimizaciones
 	• Movida al menú avanzado
 	• Aviso actualizado
+
+───── **0.20.1** ─────
 ○ **Función "Reestablecimiento de red"**
 	• Añadida confirmación para ejecutar
+
+───── **0.20.2** ─────
+○ **Aviso inicial**
+	• No volverá a salir una vez visto por primera vez
+		(se puede abrir manualmente)
+○ **Función notas del parche**
+	• Te permite ver este documento desde el script
 	
 ──────────────────────────────────────────────────
