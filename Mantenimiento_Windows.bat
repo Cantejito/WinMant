@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.2.4A
+set ver=0.20.2.4B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -115,9 +115,9 @@ echo [97m───────────────────────�
 echo. & echo ───── [95mMENÚ AVANZADO[97m
 	echo. & echo ───── 0   =   Volver al menú principal
 	echo. & echo ───── 1   =   Limpieza de archivos temporales en profundidad
-	echo. & echo ───── 1a  =   Limpieza de archivos temporales avanzada [95m[EN DESARROLLO][97m
+	echo. & echo ───── 1a  =   Limpieza de archivos temporales avanzada [91m[NO USAR][97m
 	echo. & echo ───── 2   =   Análisis automático Windows Defender [95m[EN DESARROLLO][97m
-	echo. & echo ───── 3   =   Acceso a "WindowsApps" [95m[EN DESARROLLO][97m
+	echo. & echo ───── 3   =   Acceso a "WindowsApps" [91m[NO USAR][97m
 			echo "C:\Program Files\WindowsApps" > nul 2>&1
 			
 echo. & echo.
