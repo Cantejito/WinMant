@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.1A
+set ver=0.20.3.1B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -31,7 +31,7 @@ echo. & echo ───── [94mBuscando actualizaciones...[97m
 			echo.
 			echo ───── [91mError al descargar[97m
 				timeout 2 >nul
-					goto MENU
+					goto AVISO
 		)
 		
 	findstr \C:"set ver=" %tempmant% > %tempmant%.new
