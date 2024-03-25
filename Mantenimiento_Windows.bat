@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.0B
+set ver=0.20.3.1A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -12,7 +12,7 @@ set winmant.data=C:\Users\Default\AppData\Local\WinMant
 if not exist %winmant.data% mkdir %winmant.data%
 title Versión %ver%
 NET SESSION >nul 2>& 1
-if %ERRORLEVEL% == 0 goto AVISO
+if %ERRORLEVEL% == 0 goto UPDATE
 MODE CON: COLS=82 LINES=12
 COLOR 4F
 echo ──────────────────────────────────────────────────────────────────────────────────
