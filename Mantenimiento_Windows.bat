@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.0A
+set ver=0.20.3.0B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -86,7 +86,7 @@ echo. & echo ───── [94mMENÚ PRINCIPAL[97m
 	echo.
 	echo. & echo ───── [93mOP  =   Opciones[97m
 	echo.
-	echo. & echo ───── [95mM.A =   Menú avanzado [91m[NO USAR][97m
+	echo. & echo ───── [95mDEV =   Menú experimental [91m[NO USAR][97m
 	
 echo. & echo.
 set /p MENU=───── Ejecutar... 
@@ -100,7 +100,7 @@ set /p MENU=───── Ejecutar...
 	if /i %MENU% == 4 goto RED
 	if /i %MENU% == 5 goto MEMORIA
 	if /i %MENU% == OP goto OPCIONES
-	if /i %MENU% == M.A goto MENU.ADV
+	if /i %MENU% == DEV goto MENU.DEV
 		goto MENU
 		
 :OPCIONES
@@ -121,26 +121,26 @@ set /p OPCIONES=───── Ejecutar...
 	if /i %OPCIONES% == 3 goto CHANGELOG
 		goto OPCIONES
 	
-:MENU.ADV
+:MENU.DEV
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
-echo. & echo ───── [95mMENÚ AVANZADO[97m
+echo. & echo ───── [95mMENÚ EXPERIMENTAL [91m[NO USAR][97m
 	echo. & echo ───── 0   =   Volver al menú principal
 	echo. & echo ───── 1   =   Limpieza de archivos temporales en profundidad
-	echo. & echo ───── 1a  =   Limpieza de archivos temporales avanzada [91m[NO USAR][97m
-	echo. & echo ───── 2   =   Análisis automático Windows Defender [95m[EN DESARROLLO][97m
-	echo. & echo ───── 3   =   Acceso a "WindowsApps" [91m[NO USAR][97m
+	echo. & echo ───── 1a  =   Limpieza de archivos temporales avanzada
+	echo. & echo ───── 2   =   Análisis automático Windows Defender
+	echo. & echo ───── 3   =   Acceso a "WindowsApps"
 			echo "C:\Program Files\WindowsApps" > nul 2>&1
 			
 echo. & echo.
-set /p MENU.ADV=───── Ejecutar... 
-	if /i "%MENU.ADV%" == "" goto MENU.ADV
-	if /i %MENU.ADV% == 0 goto MENU
-	if /i %MENU.ADV% == 1 goto TEMP.PRO
-	if /i %MENU.ADV% == 1a goto TEMP.ADV
-	if /i %MENU.ADV% == 2 goto DEFENDER
-	if /i %MENU.ADV% == 3 goto WINDOWSAPPS
-		goto MENU.ADV
+set /p MENU.DEV=───── Ejecutar... 
+	if /i "%MENU.DEV%" == "" goto MENU.DEV
+	if /i %MENU.DEV% == 0 goto MENU
+	if /i %MENU.DEV% == 1 goto TEMP.PRO
+	if /i %MENU.DEV% == 1a goto TEMP.ADV
+	if /i %MENU.DEV% == 2 goto DEFENDER
+	if /i %MENU.DEV% == 3 goto WINDOWSAPPS
+		goto MENU.DEV
 		
 :ESTADO
 CLS
