@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.1B
+set ver=0.20.3.2A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -93,7 +93,7 @@ set /p MENU=───── Ejecutar...
 	if /i "%MENU%" == "" goto MENU
 	if /i %MENU% == 0 exit
 	if /i %MENU% == 1 (set MOD=COMPLETO) & (goto ESTADO)
-	if /i %MENU% == 1a goto ESTADO
+	if /i %MENU% == 1a (set MOD=NO.COMPLETO) & (goto ESTADO)
 	if /i %MENU% == 1b goto TEMP
 	if /i %MENU% == 2 goto DISCOS
 	if /i %MENU% == 3 goto HIBERNAR
@@ -101,7 +101,7 @@ set /p MENU=───── Ejecutar...
 	if /i %MENU% == 5 goto MEMORIA
 	if /i %MENU% == OP goto OPCIONES
 	if /i %MENU% == DEV goto MENU.DEV
-		goto MENU
+	goto MENU
 		
 :OPCIONES
 CLS
@@ -119,7 +119,7 @@ set /p OPCIONES=───── Ejecutar...
 	if /i %OPCIONES% == 1 goto UPDATE
 	if /i %OPCIONES% == 2 goto AVISO.CHECK
 	if /i %OPCIONES% == 3 goto CHANGELOG
-		goto OPCIONES
+	goto OPCIONES
 	
 :MENU.DEV
 CLS
