@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.2A
+set ver=0.20.3.2B
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -10,7 +10,7 @@ set changelog=C:\Users\Default\AppData\Local\WinMant\WinMant_Changelog.txt
 set aviso=C:\Users\Default\AppData\Local\WinMant\Aviso
 set winmant.data=C:\Users\Default\AppData\Local\WinMant
 if not exist %winmant.data% mkdir %winmant.data%
-title Versión %ver%
+title WinMant - Versión: %ver%
 NET SESSION >nul 2>& 1
 if %ERRORLEVEL% == 0 goto UPDATE
 MODE CON: COLS=82 LINES=12
@@ -29,8 +29,8 @@ echo. & echo ───── [94mBuscando actualizaciones...[97m
 	curl -o %tempmant% --create-dirs %url% -s
 		if errorlevel 1 (
 			echo.
-			echo ───── [91mError al descargar[97m
-				timeout 2 >nul
+			echo ───── [91mError al descargar, redirigiendo...[97m
+				timeout 3 >nul
 					goto AVISO
 		)
 		
@@ -77,8 +77,8 @@ echo [97m───────────────────────�
 echo. & echo ───── [94mMENÚ PRINCIPAL[97m
 	echo. & echo ───── 0   =   Salir
 	echo. & echo ───── 1   =   Mantenimiento completo
-	echo. & echo ───── 1a  =   Verificar estado de Windows
-	echo. & echo ───── 1b  =   Limpieza de archivos temporales básicos
+	echo. & echo ───── 1.1 =   Verificar estado de Windows
+	echo. & echo ───── 1.2 =   Limpieza de archivos temporales básicos
 	echo. & echo ───── 2   =   Comprobar y reparar discos
 	echo. & echo ───── 3   =   Ajustes de hibernación
 	echo. & echo ───── 4   =   Reestablecer ajustes de red
@@ -93,8 +93,8 @@ set /p MENU=───── Ejecutar...
 	if /i "%MENU%" == "" goto MENU
 	if /i %MENU% == 0 exit
 	if /i %MENU% == 1 (set MOD=COMPLETO) & (goto ESTADO)
-	if /i %MENU% == 1a (set MOD=NO.COMPLETO) & (goto ESTADO)
-	if /i %MENU% == 1b goto TEMP
+	if /i %MENU% == 1.1 (set MOD=NO.COMPLETO) & (goto ESTADO)
+	if /i %MENU% == 1.2 goto TEMP
 	if /i %MENU% == 2 goto DISCOS
 	if /i %MENU% == 3 goto HIBERNAR
 	if /i %MENU% == 4 goto RED
@@ -127,7 +127,7 @@ echo [97m───────────────────────�
 echo. & echo ───── [95mMENÚ EXPERIMENTAL [91m[NO USAR][97m
 	echo. & echo ───── 0   =   Volver al menú principal
 	echo. & echo ───── 1   =   Limpieza de archivos temporales en profundidad
-	echo. & echo ───── 1a  =   Limpieza de archivos temporales avanzada
+	echo. & echo ───── 1.1 =   Limpieza de archivos temporales avanzada
 	echo. & echo ───── 2   =   Análisis automático Windows Defender
 	echo. & echo ───── 3   =   Acceso a "WindowsApps"
 			echo "C:\Program Files\WindowsApps" > nul 2>&1
@@ -137,7 +137,7 @@ set /p MENU.DEV=───── Ejecutar...
 	if /i "%MENU.DEV%" == "" goto MENU.DEV
 	if /i %MENU.DEV% == 0 goto MENU
 	if /i %MENU.DEV% == 1 goto TEMP.PRO
-	if /i %MENU.DEV% == 1a goto TEMP.ADV
+	if /i %MENU.DEV% == 1.1 goto TEMP.ADV
 	if /i %MENU.DEV% == 2 goto DEFENDER
 	if /i %MENU.DEV% == 3 goto WINDOWSAPPS
 		goto MENU.DEV
