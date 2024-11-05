@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.2B
+set ver=0.20.3.2C
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -499,8 +499,8 @@ echo. & echo ───── Otorgando permisos en C:\Program Files\WindowsApps.
 curl -o %changelog% --create-dirs %url.cgl% -s
 	if errorlevel 1 (
 		echo.
-		echo ───── [91mError al descargar[97m
-			timeout 2 >nul
+		echo ───── [91mError al descargar, redirigiendo...[97m
+			timeout 3 >nul
 				goto MENU
 	)
 
