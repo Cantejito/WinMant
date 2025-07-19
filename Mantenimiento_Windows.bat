@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 setlocal EnableDelayedExpansion
 chcp 65001
-set ver=0.20.3.2C
+set ver=0.20.4.0A
 set url=https://raw.githubusercontent.com/Cantejito/WinMant/main/Mantenimiento_Windows.bat
 set url.cgl=https://raw.githubusercontent.com/Cantejito/WinMant/main/WinMant_Changelog.txt
 set tempmant=C:\Users\Default\AppData\Local\WinMant\Mantenimiento_Windows.bat
@@ -367,33 +367,45 @@ echo. & echo ───── [94mComprobando discos...[97m
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────
 echo. & echo ───── [94mObteniendo ajustes de hibernación...[97m
-	for /f "tokens=3" %%a in ('reg query HKLM\SYSTEM\ControlSet001\Control\Power\ ^|find /i "HibernateEnabled "') do if %%a==0x1 (
+	reg query HKLM\SYSTEM\ControlSet001\Control\Power | find "HibernateEnabled " >nul
+		if errorlevel 1 (
+			powercfg.exe /h off
+			powercfg.exe /h on
+		)
+		
+	reg query HKLM\SYSTEM\ControlSet001\Control\Power | find "HibernateEnabled " | find "0x1" >nul && set hiber=activada || set hiber=desactivada
+	
+	if %hiber%==activada (
 		echo. & echo.
-		echo ───── [93mHibernación activada[97m
+		echo ───── [93mHibernación %hiber%[97m
 		echo. & echo ───── 0 = Volver al menú
 		echo. & echo ───── 1 = Desactivar
 		
 		echo. & echo.
 		choice /C 01 /N /M "─────  Ejecutar... "
 		if errorlevel 2 (
-			powercfg.exe /h off > nul 2>&1 & echo.
+			powercfg.exe /h off & echo.
 				goto HIBERNAR
 		)
 			goto MENU
 	)
+	
+	if %hiber%==desactivada (
 		echo. & echo.
-		echo ───── [93mHibernación desactivada[97m
+		echo ───── [93mHibernación %hiber%[97m
 		echo. & echo ───── 0 = Volver al menú
 		echo. & echo ───── 1 = Activar
 		
 		echo. & echo.
 		choice /C 01 /N /M "─────  Ejecutar... "
 		if errorlevel 2 (
-			powercfg.exe /h on > nul 2>&1 & echo.
+			powercfg.exe /h on & echo.
 				goto HIBERNAR
 		)
 			goto MENU
-			
+	)
+		goto HIBERNAR
+		
 :RED
 CLS
 echo [97m──────────────────────────────────────────────────────────────────────────────────

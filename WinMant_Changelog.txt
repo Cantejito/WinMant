@@ -12,7 +12,7 @@
 	○ Aquí iré añadiendo funciones en desarrollo o peligrosas
 • Limpieza de archivos temporales
 	○ Dividido en tres secciones: "básica", "profunda" y "avanzada"
-	○ Las dos últimas están en el menú avanzado hasta que me asegure de que no vayan a generar un BSOD, aunque la profunda "debería" ser segura
+	○ Las dos últimas están en el menú avanzado hasta que me asegure de que no vayan a generar un BSOD, aunque la profunda <debería> ser segura
 • Función "Análisis automático Windows Defender"
 	○ Reescrita prácticamente al completo para que no genere archivos temporales y sea más rápida en general
 	○ Movida al menú avanzado
@@ -29,7 +29,7 @@
 ───── 0.20.2 ─────
 • Aviso inicial
 	○ No volverá a salir una vez visto por primera vez (se puede abrir manualmente)
-• Función notas del parche
+• Función "Historial de actualizaciones"
 	○ Te permite ver este documento desde el script
 	
 ───── 0.20.3 ─────
@@ -38,5 +38,12 @@
 	○ Nombre de menú avanzado cambiado a menú experimental
 • Otros
 	○ Pequeños cambios en la estructura y lógica
+	
+───── 0.20.4 ─────
+• Función "Ajustes de hibernación"
+	○ Arreglado un error que impedía cambiar la configuración en instalaciones nuevas por falta de entrada el RegEdit
+	○ Script simplificado
+• Historial de actualizaciones
+	○ Corregidos pequeños errores
 	
 ──────────────────────────────────────────────────
